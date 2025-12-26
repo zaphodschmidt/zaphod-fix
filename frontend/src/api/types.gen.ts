@@ -4,6 +4,169 @@ export type ClientOptions = {
     baseUrl: 'http://localhost:8002' | (string & {});
 };
 
+export type Completion = {
+    readonly id: number;
+    date_completed: string;
+    streak: number;
+};
+
+export type PatchedCompletion = {
+    readonly id?: number;
+    date_completed?: string;
+    streak?: number;
+};
+
+export type PatchedStreak = {
+    readonly id?: number;
+    readonly completions?: Array<Completion>;
+    name?: string;
+    is_active?: boolean;
+    start_date?: string;
+    current_streak?: number;
+    longest_streak?: number;
+    days_completed?: number;
+};
+
+export type Streak = {
+    readonly id: number;
+    readonly completions: Array<Completion>;
+    name: string;
+    is_active?: boolean;
+    start_date: string;
+    current_streak?: number;
+    longest_streak?: number;
+    days_completed?: number;
+};
+
+export type CompletionWritable = {
+    date_completed: string;
+    streak: number;
+};
+
+export type PatchedCompletionWritable = {
+    date_completed?: string;
+    streak?: number;
+};
+
+export type PatchedStreakWritable = {
+    name?: string;
+    is_active?: boolean;
+    start_date?: string;
+    current_streak?: number;
+    longest_streak?: number;
+    days_completed?: number;
+};
+
+export type StreakWritable = {
+    name: string;
+    is_active?: boolean;
+    start_date: string;
+    current_streak?: number;
+    longest_streak?: number;
+    days_completed?: number;
+};
+
+export type CompletionsListData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/completions/';
+};
+
+export type CompletionsListResponses = {
+    200: Array<Completion>;
+};
+
+export type CompletionsListResponse = CompletionsListResponses[keyof CompletionsListResponses];
+
+export type CompletionsCreateData = {
+    body: CompletionWritable;
+    path?: never;
+    query?: never;
+    url: '/api/completions/';
+};
+
+export type CompletionsCreateResponses = {
+    201: Completion;
+};
+
+export type CompletionsCreateResponse = CompletionsCreateResponses[keyof CompletionsCreateResponses];
+
+export type CompletionsDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this completion.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/completions/{id}/';
+};
+
+export type CompletionsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type CompletionsDestroyResponse = CompletionsDestroyResponses[keyof CompletionsDestroyResponses];
+
+export type CompletionsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this completion.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/completions/{id}/';
+};
+
+export type CompletionsRetrieveResponses = {
+    200: Completion;
+};
+
+export type CompletionsRetrieveResponse = CompletionsRetrieveResponses[keyof CompletionsRetrieveResponses];
+
+export type CompletionsPartialUpdateData = {
+    body?: PatchedCompletionWritable;
+    path: {
+        /**
+         * A unique integer value identifying this completion.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/completions/{id}/';
+};
+
+export type CompletionsPartialUpdateResponses = {
+    200: Completion;
+};
+
+export type CompletionsPartialUpdateResponse = CompletionsPartialUpdateResponses[keyof CompletionsPartialUpdateResponses];
+
+export type CompletionsUpdateData = {
+    body: CompletionWritable;
+    path: {
+        /**
+         * A unique integer value identifying this completion.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/completions/{id}/';
+};
+
+export type CompletionsUpdateResponses = {
+    200: Completion;
+};
+
+export type CompletionsUpdateResponse = CompletionsUpdateResponses[keyof CompletionsUpdateResponses];
+
 export type SchemaRetrieveData = {
     body?: never;
     path?: never;
@@ -21,3 +184,104 @@ export type SchemaRetrieveResponses = {
 };
 
 export type SchemaRetrieveResponse = SchemaRetrieveResponses[keyof SchemaRetrieveResponses];
+
+export type StreaksListData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/streaks/';
+};
+
+export type StreaksListResponses = {
+    200: Array<Streak>;
+};
+
+export type StreaksListResponse = StreaksListResponses[keyof StreaksListResponses];
+
+export type StreaksCreateData = {
+    body: StreakWritable;
+    path?: never;
+    query?: never;
+    url: '/api/streaks/';
+};
+
+export type StreaksCreateResponses = {
+    201: Streak;
+};
+
+export type StreaksCreateResponse = StreaksCreateResponses[keyof StreaksCreateResponses];
+
+export type StreaksDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this streak.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/streaks/{id}/';
+};
+
+export type StreaksDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type StreaksDestroyResponse = StreaksDestroyResponses[keyof StreaksDestroyResponses];
+
+export type StreaksRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this streak.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/streaks/{id}/';
+};
+
+export type StreaksRetrieveResponses = {
+    200: Streak;
+};
+
+export type StreaksRetrieveResponse = StreaksRetrieveResponses[keyof StreaksRetrieveResponses];
+
+export type StreaksPartialUpdateData = {
+    body?: PatchedStreakWritable;
+    path: {
+        /**
+         * A unique integer value identifying this streak.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/streaks/{id}/';
+};
+
+export type StreaksPartialUpdateResponses = {
+    200: Streak;
+};
+
+export type StreaksPartialUpdateResponse = StreaksPartialUpdateResponses[keyof StreaksPartialUpdateResponses];
+
+export type StreaksUpdateData = {
+    body: StreakWritable;
+    path: {
+        /**
+         * A unique integer value identifying this streak.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/streaks/{id}/';
+};
+
+export type StreaksUpdateResponses = {
+    200: Streak;
+};
+
+export type StreaksUpdateResponse = StreaksUpdateResponses[keyof StreaksUpdateResponses];

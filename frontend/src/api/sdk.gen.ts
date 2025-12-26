@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { SchemaRetrieveData, SchemaRetrieveResponses } from './types.gen';
+import type { CompletionsCreateData, CompletionsCreateResponses, CompletionsDestroyData, CompletionsDestroyResponses, CompletionsListData, CompletionsListResponses, CompletionsPartialUpdateData, CompletionsPartialUpdateResponses, CompletionsRetrieveData, CompletionsRetrieveResponses, CompletionsUpdateData, CompletionsUpdateResponses, SchemaRetrieveData, SchemaRetrieveResponses, StreaksCreateData, StreaksCreateResponses, StreaksDestroyData, StreaksDestroyResponses, StreaksListData, StreaksListResponses, StreaksPartialUpdateData, StreaksPartialUpdateResponses, StreaksRetrieveData, StreaksRetrieveResponses, StreaksUpdateData, StreaksUpdateResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -18,6 +18,78 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
     meta?: Record<string, unknown>;
 };
 
+export const completionsList = <ThrowOnError extends boolean = false>(options?: Options<CompletionsListData, ThrowOnError>) => (options?.client ?? client).get<CompletionsListResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/completions/',
+    ...options
+});
+
+export const completionsCreate = <ThrowOnError extends boolean = false>(options: Options<CompletionsCreateData, ThrowOnError>) => (options.client ?? client).post<CompletionsCreateResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/completions/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const completionsDestroy = <ThrowOnError extends boolean = false>(options: Options<CompletionsDestroyData, ThrowOnError>) => (options.client ?? client).delete<CompletionsDestroyResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/completions/{id}/',
+    ...options
+});
+
+export const completionsRetrieve = <ThrowOnError extends boolean = false>(options: Options<CompletionsRetrieveData, ThrowOnError>) => (options.client ?? client).get<CompletionsRetrieveResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/completions/{id}/',
+    ...options
+});
+
+export const completionsPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<CompletionsPartialUpdateData, ThrowOnError>) => (options.client ?? client).patch<CompletionsPartialUpdateResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/completions/{id}/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const completionsUpdate = <ThrowOnError extends boolean = false>(options: Options<CompletionsUpdateData, ThrowOnError>) => (options.client ?? client).put<CompletionsUpdateResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/completions/{id}/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
 /**
  * OpenApi3 schema for this API. Format can be selected via content negotiation.
  *
@@ -32,4 +104,76 @@ export const schemaRetrieve = <ThrowOnError extends boolean = false>(options?: O
         }, { scheme: 'basic', type: 'http' }],
     url: '/api/schema/',
     ...options
+});
+
+export const streaksList = <ThrowOnError extends boolean = false>(options?: Options<StreaksListData, ThrowOnError>) => (options?.client ?? client).get<StreaksListResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/streaks/',
+    ...options
+});
+
+export const streaksCreate = <ThrowOnError extends boolean = false>(options: Options<StreaksCreateData, ThrowOnError>) => (options.client ?? client).post<StreaksCreateResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/streaks/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const streaksDestroy = <ThrowOnError extends boolean = false>(options: Options<StreaksDestroyData, ThrowOnError>) => (options.client ?? client).delete<StreaksDestroyResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/streaks/{id}/',
+    ...options
+});
+
+export const streaksRetrieve = <ThrowOnError extends boolean = false>(options: Options<StreaksRetrieveData, ThrowOnError>) => (options.client ?? client).get<StreaksRetrieveResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/streaks/{id}/',
+    ...options
+});
+
+export const streaksPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<StreaksPartialUpdateData, ThrowOnError>) => (options.client ?? client).patch<StreaksPartialUpdateResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/streaks/{id}/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const streaksUpdate = <ThrowOnError extends boolean = false>(options: Options<StreaksUpdateData, ThrowOnError>) => (options.client ?? client).put<StreaksUpdateResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }, { scheme: 'basic', type: 'http' }],
+    url: '/api/streaks/{id}/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });

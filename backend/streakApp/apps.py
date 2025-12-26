@@ -1,6 +1,5 @@
 from django.apps import AppConfig
 
-
-class DefaultappConfig(AppConfig):
+class StreakAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'defaultApp'
+    name = 'streakApp'
