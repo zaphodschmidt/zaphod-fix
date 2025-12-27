@@ -7,12 +7,14 @@ export type ClientOptions = {
 export type Completion = {
     readonly id: number;
     date_completed: string;
+    day_of_week?: number;
     streak: number;
 };
 
 export type PatchedCompletion = {
     readonly id?: number;
     date_completed?: string;
+    day_of_week?: number;
     streak?: number;
 };
 
@@ -22,6 +24,7 @@ export type PatchedStreak = {
     name?: string;
     is_active?: boolean;
     start_date?: string;
+    color?: string;
     current_streak?: number;
     longest_streak?: number;
     days_completed?: number;
@@ -33,6 +36,7 @@ export type Streak = {
     name: string;
     is_active?: boolean;
     start_date: string;
+    color: string;
     current_streak?: number;
     longest_streak?: number;
     days_completed?: number;
@@ -40,11 +44,13 @@ export type Streak = {
 
 export type CompletionWritable = {
     date_completed: string;
+    day_of_week?: number;
     streak: number;
 };
 
 export type PatchedCompletionWritable = {
     date_completed?: string;
+    day_of_week?: number;
     streak?: number;
 };
 
@@ -52,6 +58,7 @@ export type PatchedStreakWritable = {
     name?: string;
     is_active?: boolean;
     start_date?: string;
+    color?: string;
     current_streak?: number;
     longest_streak?: number;
     days_completed?: number;
@@ -61,6 +68,7 @@ export type StreakWritable = {
     name: string;
     is_active?: boolean;
     start_date: string;
+    color: string;
     current_streak?: number;
     longest_streak?: number;
     days_completed?: number;

@@ -26,13 +26,11 @@ function Index() {
     return <div>No streaks found</div>
   }
 
-  console.log(streaks)
-
   return (
     <div className="p-2">
       <h3>Welcome Home!</h3>
       {streak.map((streak: Streak) => (
-        <DayBlockGrid key={streak.id} sizeX={7} sizeY={7} streak={streak} />
+        <DayBlockGrid key={streak.id} sizeX={20} sizeY={7} streak={streak} color={streak.color} />
       ))}
     </div>
   )
