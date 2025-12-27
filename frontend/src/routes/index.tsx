@@ -25,7 +25,7 @@ function Index() {
   if (!streaks) {
     return <div>No streaks found</div>
   }
-
+  console.log(streak)
   return (
     <div className="p-2">
       <h3>Welcome Home!</h3>

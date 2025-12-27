@@ -4,6 +4,32 @@ export type ClientOptions = {
     baseUrl: 'http://localhost:8002' | (string & {});
 };
 
+/**
+ * * `red` - Red
+ * * `orange` - Orange
+ * * `amber` - Amber
+ * * `yellow` - Yellow
+ * * `lime` - Lime
+ * * `green` - Green
+ * * `emerald` - Emerald
+ * * `teal` - Teal
+ * * `cyan` - Cyan
+ * * `sky` - Sky
+ * * `blue` - Blue
+ * * `indigo` - Indigo
+ * * `violet` - Violet
+ * * `purple` - Purple
+ * * `fuchsia` - Fuchsia
+ * * `pink` - Pink
+ * * `rose` - Rose
+ * * `slate` - Slate
+ * * `gray` - Gray
+ * * `zinc` - Zinc
+ * * `neutral` - Neutral
+ * * `stone` - Stone
+ */
+export type ColorEnum = 'red' | 'orange' | 'amber' | 'yellow' | 'lime' | 'green' | 'emerald' | 'teal' | 'cyan' | 'sky' | 'blue' | 'indigo' | 'violet' | 'purple' | 'fuchsia' | 'pink' | 'rose' | 'slate' | 'gray' | 'zinc' | 'neutral' | 'stone';
+
 export type Completion = {
     readonly id: number;
     date_completed: string;
@@ -24,7 +50,7 @@ export type PatchedStreak = {
     name?: string;
     is_active?: boolean;
     start_date?: string;
-    color?: string;
+    color?: ColorEnum;
     current_streak?: number;
     longest_streak?: number;
     days_completed?: number;
@@ -36,7 +62,7 @@ export type Streak = {
     name: string;
     is_active?: boolean;
     start_date: string;
-    color: string;
+    color: ColorEnum;
     current_streak?: number;
     longest_streak?: number;
     days_completed?: number;
@@ -58,7 +84,7 @@ export type PatchedStreakWritable = {
     name?: string;
     is_active?: boolean;
     start_date?: string;
-    color?: string;
+    color?: ColorEnum;
     current_streak?: number;
     longest_streak?: number;
     days_completed?: number;
@@ -68,7 +94,7 @@ export type StreakWritable = {
     name: string;
     is_active?: boolean;
     start_date: string;
-    color: string;
+    color: ColorEnum;
     current_streak?: number;
     longest_streak?: number;
     days_completed?: number;
