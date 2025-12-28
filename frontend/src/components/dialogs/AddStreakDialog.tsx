@@ -32,8 +32,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { BG_200_BY_COLOR } from "@/lib/colors"
+import { COLOR_CLASSES, COLOR_DISPLAY_NAMES } from "@/lib/colors"
 import type { ColorEnum, StreakWritable } from "@/api/types.gen"
+import { IconPlus, IconFlame, IconPalette, IconSparkles } from "@tabler/icons-react"
+import { cn } from "@/lib/utils"
 
 function AddStreakDialog() {
     const queryClient = useQueryClient()
@@ -41,7 +43,7 @@ function AddStreakDialog() {
     const [open, setOpen] = useState(false)
     const [name, setName] = useState("")
     const [color, setColor] = useState<ColorEnum | "">("")
-    const colors = Object.keys(BG_200_BY_COLOR) as ColorEnum[]
+    const colors = Object.keys(COLOR_CLASSES).filter(c => COLOR_DISPLAY_NAMES[c]) as ColorEnum[]
 
     const { mutate: createStreak, isPending } = useMutation({
         ...streaksCreateMutation({}),
@@ -57,72 +59,143 @@ function AddStreakDialog() {
         e.preventDefault()
 
         if (!name.trim() || !color) return
-        const startDate = new Date().toISOString().slice(0, 10) // DRF DateField expects YYYY-MM-DD
+        const startDate = new Date().toISOString().slice(0, 10)
         const body: StreakWritable = { name: name.trim(), color, start_date: startDate }
         createStreak({ body })
     }
 
+    const colorSet = color ? COLOR_CLASSES[color] : null
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger render={<Button variant="outline" />}>
-                Add New Streak
-            </DialogTrigger>
+            <DialogTrigger render={
+                <Button className="gap-2 bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity shadow-lg shadow-primary/25">
+                    <IconPlus className="w-4 h-4" />
+                    <span>New Streak</span>
+                </Button>
+            } />
 
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>Create New Streak</DialogTitle>
-                    <DialogDescription>
-                        Create a new streak to track your progress.
-                    </DialogDescription>
+            <DialogContent className="sm:max-w-[440px] bg-card/95 backdrop-blur-xl border-border/50 shadow-2xl">
+                <DialogHeader className="pb-4">
+                    <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                            <IconFlame className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                            <DialogTitle className="text-xl">Create New Streak</DialogTitle>
+                            <DialogDescription className="text-sm">
+                                Start tracking a new habit today
+                            </DialogDescription>
+                        </div>
+                    </div>
                 </DialogHeader>
 
-                <form onSubmit={handleSubmit} className="grid gap-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <FieldGroup>
-                        <FieldSet>
+                        <FieldSet className="space-y-4">
                             <Field>
-                                <FieldLabel htmlFor="streak-name">Streak Name</FieldLabel>
+                                <FieldLabel htmlFor="streak-name" className="text-sm font-medium flex items-center gap-2">
+                                    <IconSparkles className="w-4 h-4 text-muted-foreground" />
+                                    Streak Name
+                                </FieldLabel>
                                 <Input
                                     id="streak-name"
                                     name="name"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    placeholder="Daily run"
+                                    placeholder="e.g., Morning workout, Read 30 mins..."
                                     required
                                     autoFocus
+                                    className="h-11 bg-input/50 border-border/50 focus:border-primary/50 focus:ring-primary/20"
                                 />
                             </Field>
 
                             <Field>
-                                <FieldLabel htmlFor="streak-color">Streak Color</FieldLabel>
+                                <FieldLabel htmlFor="streak-color" className="text-sm font-medium flex items-center gap-2">
+                                    <IconPalette className="w-4 h-4 text-muted-foreground" />
+                                    Theme Color
+                                </FieldLabel>
                                 <Select value={color} onValueChange={(v) => setColor(v as ColorEnum)}>
-                                    <SelectTrigger id="streak-color" className="w-full">
-                                        <SelectValue className={!color ? "text-muted-foreground" : undefined}>
-                                            {!color ? "Select a color" : null}
+                                    <SelectTrigger 
+                                        id="streak-color" 
+                                        className="h-11 w-full bg-input/50 border-border/50 focus:border-primary/50 focus:ring-primary/20"
+                                    >
+                                        <SelectValue>
+                                            {!color && <span className="text-muted-foreground">Choose a color...</span>}
                                         </SelectValue>
                                     </SelectTrigger>
-                                    <SelectContent>
+                                    <SelectContent className="bg-popover/95 backdrop-blur-xl border-border/50">
                                         <SelectGroup>
-                                            <SelectLabel>Colors</SelectLabel>
+                                            <SelectLabel className="text-muted-foreground">Colors</SelectLabel>
                                             {colors.map((c) => (
-                                                <SelectItem key={c} value={c}>
-                                                    {c}
+                                                <SelectItem key={c} value={c} className="cursor-pointer">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={cn(
+                                                            "w-4 h-4 rounded-full",
+                                                            COLOR_CLASSES[c]?.bright
+                                                        )} />
+                                                        <span>{COLOR_DISPLAY_NAMES[c]}</span>
+                                                    </div>
                                                 </SelectItem>
                                             ))}
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
-                                <FieldDescription>
-                                    This is used to color the streak blocks.
+                                <FieldDescription className="text-xs text-muted-foreground mt-1.5">
+                                    This will be the color of your streak blocks
                                 </FieldDescription>
                             </Field>
                         </FieldSet>
                     </FieldGroup>
-                    <DialogFooter>
-                        <DialogClose render={<Button variant="outline" type="button" />}>
-                            Cancel
-                        </DialogClose>
-                        <Button type="submit" disabled={isPending || !name.trim() || !color}>
-                            {isPending ? "Creating..." : "Create Streak"}
+
+                    {/* Preview */}
+                    {color && (
+                        <div className="p-4 rounded-xl bg-muted/30 border border-border/30">
+                            <p className="text-xs text-muted-foreground mb-3">Preview</p>
+                            <div className="flex items-center gap-3">
+                                <div className={cn("w-4 h-4 rounded-full", colorSet?.bright)} />
+                                <span className="font-medium">{name || "Your streak"}</span>
+                            </div>
+                            <div className="flex gap-1 mt-3">
+                                {[...Array(7)].map((_, i) => (
+                                    <div 
+                                        key={i} 
+                                        className={cn(
+                                            "w-6 h-6 rounded",
+                                            i < 4 ? colorSet?.bright : "bg-muted/40"
+                                        )} 
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    <DialogFooter className="gap-2 sm:gap-2">
+                        <DialogClose render={
+                            <Button 
+                                variant="outline" 
+                                type="button"
+                                className="flex-1 sm:flex-none border-border/50 hover:bg-muted/50"
+                            >
+                                Cancel
+                            </Button>
+                        } />
+                        <Button 
+                            type="submit" 
+                            disabled={isPending || !name.trim() || !color}
+                            className="flex-1 sm:flex-none bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity gap-2"
+                        >
+                            {isPending ? (
+                                <>
+                                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                    Creating...
+                                </>
+                            ) : (
+                                <>
+                                    <IconFlame className="w-4 h-4" />
+                                    Create Streak
+                                </>
+                            )}
                         </Button>
                     </DialogFooter>
                 </form>

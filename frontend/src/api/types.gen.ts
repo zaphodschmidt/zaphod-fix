@@ -47,25 +47,25 @@ export type PatchedCompletion = {
 export type PatchedStreak = {
     readonly id?: number;
     readonly completions?: Array<Completion>;
+    readonly current_streak?: number;
+    readonly longest_streak?: number;
+    readonly days_completed?: number;
     name?: string;
     is_active?: boolean;
     start_date?: string;
     color?: ColorEnum;
-    current_streak?: number;
-    longest_streak?: number;
-    days_completed?: number;
 };
 
 export type Streak = {
     readonly id: number;
     readonly completions: Array<Completion>;
+    readonly current_streak: number;
+    readonly longest_streak: number;
+    readonly days_completed: number;
     name: string;
     is_active?: boolean;
     start_date: string;
     color: ColorEnum;
-    current_streak?: number;
-    longest_streak?: number;
-    days_completed?: number;
 };
 
 export type CompletionWritable = {
@@ -85,9 +85,6 @@ export type PatchedStreakWritable = {
     is_active?: boolean;
     start_date?: string;
     color?: ColorEnum;
-    current_streak?: number;
-    longest_streak?: number;
-    days_completed?: number;
 };
 
 export type StreakWritable = {
@@ -95,9 +92,6 @@ export type StreakWritable = {
     is_active?: boolean;
     start_date: string;
     color: ColorEnum;
-    current_streak?: number;
-    longest_streak?: number;
-    days_completed?: number;
 };
 
 export type CompletionsListData = {
