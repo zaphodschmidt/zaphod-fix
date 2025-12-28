@@ -1,5 +1,7 @@
 import { useMemo } from "react"
+import { cn } from "@/lib/utils"
 import type { Completion, Streak } from "@/api"
+import { BG_200_BY_COLOR } from "@/lib/colors"
 
 interface DayBlockGridProps {
   sizeX: number
@@ -8,9 +10,11 @@ interface DayBlockGridProps {
   color: string
 }
 
+// Tailwind colors need to be typed statically so they load at build time
 function DayBlockGrid({ sizeX, sizeY, streak, color }: DayBlockGridProps) {
   function DayBlock({ color }: { color: string }) {
-    return <div className={`w-10 h-10 bg-${color}-200 rounded-md`} />
+    const bgClass = BG_200_BY_COLOR[color] ?? BG_200_BY_COLOR.gray
+    return <div className={cn("h-10 w-10 rounded-md", bgClass)} />
   }
 
   const dayBlocks = useMemo<React.ReactNode[]>(() => {
@@ -37,7 +41,6 @@ function DayBlockGrid({ sizeX, sizeY, streak, color }: DayBlockGridProps) {
   return (
     <div className="outline m-2 p-2 rounded-md w-fit">
       <h3>{streak?.name}</h3>
-    <div className="outline m-2 p-2 rounded-md w-fit">
       <div
         className="grid grid-flow-col gap-1"
         style={{
@@ -47,7 +50,6 @@ function DayBlockGrid({ sizeX, sizeY, streak, color }: DayBlockGridProps) {
       >
         {dayBlocks}
       </div>
-    </div>
     </div>
   )
 }

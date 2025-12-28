@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { streaksListOptions } from '@/api/@tanstack/react-query.gen'
 import { useEffect, useState } from 'react'
 import type { Streak } from '@/api'
+import AddStreakDialog from '@/components/dialogs/AddStreakDialog'
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -25,12 +26,12 @@ function Index() {
   if (!streaks) {
     return <div>No streaks found</div>
   }
-  console.log(streak)
   return (
     <div className="p-2">
       <h3>Welcome Home!</h3>
+      <AddStreakDialog />
       {streak.map((streak: Streak) => (
-        <DayBlockGrid key={streak.id} sizeX={20} sizeY={7} streak={streak} color={streak.color} />
+        <DayBlockGrid key={streak.id} sizeX={7} sizeY={7} streak={streak} color={streak.color} />
       ))}
     </div>
   )
