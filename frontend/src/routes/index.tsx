@@ -2,7 +2,6 @@ import { createFileRoute } from '@tanstack/react-router'
 import DayBlockGrid from '@/components/DayBlockGrid'
 import { useQuery } from '@tanstack/react-query'
 import { streaksListOptions } from '@/api/@tanstack/react-query.gen'
-import { useEffect, useState } from 'react'
 import type { Streak } from '@/api'
 import AddStreakDialog from '@/components/dialogs/AddStreakDialog'
 
@@ -12,13 +11,6 @@ export const Route = createFileRoute('/')({
 
 function Index() {
   const { data: streaks, isLoading } = useQuery(streaksListOptions({}))
-  const [streak, setStreak] = useState<Streak[] >([])
-
-  useEffect(() => {
-    if (streaks) {
-      setStreak(streaks)
-    }
-  }, [streaks])
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -30,7 +22,7 @@ function Index() {
     <div className="p-2">
       <h3>Welcome Home!</h3>
       <AddStreakDialog />
-      {streak.map((streak: Streak) => (
+      {streaks.map((streak: Streak) => (
         <DayBlockGrid key={streak.id} sizeX={7} sizeY={7} streak={streak} color={streak.color} />
       ))}
     </div>

@@ -2,6 +2,7 @@ import { useMemo } from "react"
 import { cn } from "@/lib/utils"
 import type { Completion, Streak } from "@/api"
 import { BG_200_BY_COLOR } from "@/lib/colors"
+import AddCompletionDialog from "./dialogs/AddCompletionDialog"
 
 interface DayBlockGridProps {
   sizeX: number
@@ -10,7 +11,6 @@ interface DayBlockGridProps {
   color: string
 }
 
-// Tailwind colors need to be typed statically so they load at build time
 function DayBlockGrid({ sizeX, sizeY, streak, color }: DayBlockGridProps) {
   function DayBlock({ color }: { color: string }) {
     const bgClass = BG_200_BY_COLOR[color] ?? BG_200_BY_COLOR.gray
@@ -50,6 +50,7 @@ function DayBlockGrid({ sizeX, sizeY, streak, color }: DayBlockGridProps) {
       >
         {dayBlocks}
       </div>
+      <AddCompletionDialog streak={streak} />
     </div>
   )
 }
