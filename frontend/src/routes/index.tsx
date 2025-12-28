@@ -143,7 +143,7 @@ function Index() {
                 style={{ animationDelay: `${300 + index * 100}ms` }}
               >
                 <DayBlockGrid 
-                  sizeX={12} 
+                  sizeX={26} 
                   sizeY={7} 
                   streak={streak} 
                 />

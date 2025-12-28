@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/select"
 import { COLOR_CLASSES, COLOR_DISPLAY_NAMES } from "@/lib/colors"
 import type { ColorEnum, StreakWritable } from "@/api/types.gen"
-import { IconPlus, IconFlame, IconPalette, IconSparkles } from "@tabler/icons-react"
+import { IconPlus, IconFlame, IconPalette, IconCalendarEventFilled } from "@tabler/icons-react"
 import { cn } from "@/lib/utils"
 
 function AddStreakDialog() {
@@ -95,7 +95,7 @@ function AddStreakDialog() {
                         <FieldSet className="space-y-4">
                             <Field>
                                 <FieldLabel htmlFor="streak-name" className="text-sm font-medium flex items-center gap-2">
-                                    <IconSparkles className="w-4 h-4 text-muted-foreground" />
+                                    <IconCalendarEventFilled className="w-4 h-4 text-muted-foreground" />
                                     Streak Name
                                 </FieldLabel>
                                 <Input

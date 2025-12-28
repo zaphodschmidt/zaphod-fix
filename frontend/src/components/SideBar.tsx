@@ -1,4 +1,4 @@
-import { IconFlame, IconHome2, IconChartBar, IconSettings, IconMoon } from "@tabler/icons-react"
+import { IconFlame, IconHome2, IconChartBar, IconSettings, IconMoon, IconSun } from "@tabler/icons-react"
 import {
   Sidebar,
   SidebarContent,
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Link, useLocation } from "@tanstack/react-router"
 import { cn } from "@/lib/utils"
+import { useTheme } from "@/hooks/use-theme"
 
 const navItems = [
   {
@@ -33,6 +34,8 @@ const navItems = [
 
 export function SideBar() {
   const location = useLocation()
+  const { resolvedTheme, toggleTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
 
   return (
     <Sidebar className="border-r border-sidebar-border/50">
@@ -66,28 +69,27 @@ export function SideBar() {
                 return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
-                      asChild
+                      render={<Link to={item.url} />}
+                      isActive={isActive}
                       className={cn(
                         "h-11 px-3 rounded-lg transition-all duration-200",
                         "hover:bg-sidebar-accent/50",
                         isActive && "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
                       )}
                     >
-                      <Link to={item.url} className="flex items-center gap-3">
-                        <item.icon 
-                          className={cn(
-                            "w-5 h-5 transition-colors",
-                            isActive ? "text-primary" : "text-muted-foreground"
-                          )} 
-                          stroke={isActive ? 2 : 1.5}
-                        />
-                        <span className={cn(
-                          "font-medium",
-                          isActive ? "text-foreground" : "text-muted-foreground"
-                        )}>
-                          {item.title}
-                        </span>
-                      </Link>
+                      <item.icon 
+                        className={cn(
+                          "w-5 h-5 transition-colors",
+                          isActive ? "text-primary" : "text-muted-foreground"
+                        )} 
+                        stroke={isActive ? 2 : 1.5}
+                      />
+                      <span className={cn(
+                        "font-medium",
+                        isActive ? "text-foreground" : "text-muted-foreground"
+                      )}>
+                        {item.title}
+                      </span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 )
@@ -98,16 +100,37 @@ export function SideBar() {
       </SidebarContent>
 
       <SidebarFooter className="p-4 pt-2">
-        {/* Theme toggle hint */}
-        <div className="flex items-center justify-between p-3 rounded-lg bg-sidebar-accent/30 border border-sidebar-border/50">
+        {/* Theme toggle */}
+        <button
+          onClick={toggleTheme}
+          className="w-full flex items-center justify-between p-3 rounded-lg bg-sidebar-accent/30 border border-sidebar-border/50 hover:bg-sidebar-accent/50 transition-colors cursor-pointer"
+        >
           <div className="flex items-center gap-2">
-            <IconMoon className="w-4 h-4 text-muted-foreground" />
-            <span className="text-xs text-muted-foreground">Dark Mode</span>
+            {isDark ? (
+              <IconMoon className="w-4 h-4 text-muted-foreground" />
+            ) : (
+              <IconSun className="w-4 h-4 text-amber-500" />
+            )}
+            <span className="text-xs text-muted-foreground">
+              {isDark ? "Dark Mode" : "Light Mode"}
+            </span>
           </div>
-          <div className="w-8 h-4 rounded-full bg-primary/20 flex items-center justify-end px-0.5">
-            <div className="w-3 h-3 rounded-full bg-primary" />
+          
+          {/* Toggle switch */}
+          <div 
+            className={cn(
+              "w-9 h-5 rounded-full flex items-center px-0.5 transition-colors",
+              isDark ? "bg-primary/20 justify-end" : "bg-amber-500/20 justify-start"
+            )}
+          >
+            <div 
+              className={cn(
+                "w-4 h-4 rounded-full transition-colors",
+                isDark ? "bg-primary" : "bg-amber-500"
+              )} 
+            />
           </div>
-        </div>
+        </button>
       </SidebarFooter>
     </Sidebar>
   )
