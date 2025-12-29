@@ -8,8 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate-api": "openapi-ts",
-    "openapi-ts": "openapi-ts"
+    "generate-api": "openapi-ts && node scripts/patch-openapi-client-baseurl.mjs",
+    "openapi-ts": "openapi-ts && node scripts/patch-openapi-client-baseurl.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",
