@@ -11,9 +11,7 @@ services:
       - "${DB_PORT}:5432"
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: ${DOCKER_IMAGE_REPO:-zapgawd/zaphods-fix}:${BACKEND_IMAGE_TAG:-backend-latest}
     env_file:
       - .env
     environment:
@@ -26,10 +24,7 @@ services:
       - db
 
   frontend:
-    build:
-      context: ./frontend/
-      dockerfile: ./Dockerfile
-      target: prod
+    image: ${DOCKER_IMAGE_REPO:-zapgawd/zaphods-fix}:${FRONTEND_IMAGE_TAG:-frontend-latest}
     expose:
       - "80"
 
