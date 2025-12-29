@@ -45,6 +45,15 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
+    # This app currently has no user auth, and the frontend calls the API directly.
+    # DRF's default SessionAuthentication enforces CSRF on unsafe methods, which
+    # causes "Forbidden: /api/..." unless the frontend implements CSRF handling.
+    # Disabling SessionAuthentication avoids CSRF enforcement for the API.
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
 }
 
 MIDDLEWARE = [
