@@ -26,6 +26,3 @@ services:
       - "${DOZZLE_PORT}:8080"
     environment:
       - DOZZLE_BASE=/logs
-
-  nginx:
-    # In dev we keep the same nginx config as prod; only the upstream frontend container differs.
