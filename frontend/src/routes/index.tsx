@@ -110,7 +110,7 @@ function Index() {
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4 fade-in-up" style={{ animationDelay: '100ms' }}>
           <StatsCard 
             icon={IconFlame} 
-            label="Active Streaks" 
+            label="Activadsfe Streaks" 
             value={totalStreaks}
             color="bg-gradient-to-br from-orange-500 to-red-600"
           />
