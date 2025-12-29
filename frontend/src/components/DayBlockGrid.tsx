@@ -31,11 +31,16 @@ function DayBlockGrid({ sizeX, sizeY, streak }: DayBlockGridProps) {
   }) {
     return (
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger
+          render={
+            // Stable outer wrapper for hover area - prevents flicker
+            <div className="h-4 w-4 flex items-center justify-center cursor-pointer group/block" />
+          }
+        >
           <div
             className={cn(
-              "h-3 w-3 rounded-sm transition-all duration-200 cursor-pointer",
-              "hover:scale-125 hover:z-10 hover:ring-2 hover:ring-white/20",
+              "h-3 w-3 rounded-sm transition-all duration-200 pointer-events-none",
+              "group-hover/block:scale-110 group-hover/block:ring-2 group-hover/block:ring-white/20",
               isCompleted ? colorSet.bright : EMPTY_BLOCK_CLASS,
             )}
           />

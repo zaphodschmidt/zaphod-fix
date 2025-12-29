@@ -1,4 +1,4 @@
-import { IconFlame, IconHome2, IconChartBar, IconSettings, IconMoon, IconSun } from "@tabler/icons-react"
+import { IconFlame, IconHome2, IconChartBar, IconMoon, IconSun } from "@tabler/icons-react"
 import {
   Sidebar,
   SidebarContent,
@@ -24,11 +24,6 @@ const navItems = [
     title: "Statistics",
     url: "/stats",
     icon: IconChartBar,
-  },
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: IconSettings,
   },
 ]
 

@@ -103,7 +103,7 @@ function AddCompletionDialog({ streak }: { streak: Streak }) {
                             <DialogTitle className="text-lg">Log Completion</DialogTitle>
                             <DialogDescription className="text-sm">
                                 {streak.name}
-                            </DialogDescription>
+                    </DialogDescription>
                         </div>
                     </div>
                 </DialogHeader>
@@ -136,7 +136,7 @@ function AddCompletionDialog({ streak }: { streak: Streak }) {
                                 type="button"
                                 className="flex-1 sm:flex-none border-border/50 hover:bg-muted/50"
                             >
-                                Cancel
+                            Cancel
                             </Button>
                         } />
                         <Button 
