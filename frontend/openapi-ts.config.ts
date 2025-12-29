@@ -5,7 +5,7 @@ dotenv.config({ path: '../.env' });
 
 export default defineConfig({
   client: '@hey-api/client-fetch',
-  input: `http://localhost:${process.env.BACKEND_PORT}/api/schema/`,
+  input: `http://localhost/api/schema/`,
   output: 'src/api/',
   plugins: [
     '@tanstack/react-query',
