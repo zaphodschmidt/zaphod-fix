@@ -43,16 +43,16 @@ INSTALLED_APPS = [
     'drf_spectacular',
 ]
 
+# Custom User Model
+AUTH_USER_MODEL = 'streakApp.User'
+
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-
-    # This app currently has no user auth, and the frontend calls the API directly.
-    # DRF's default SessionAuthentication enforces CSRF on unsafe methods, which
-    # causes "Forbidden: /api/..." unless the frontend implements CSRF handling.
-    # Disabling SessionAuthentication avoids CSRF enforcement for the API.
-    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ],
 }
 
@@ -69,6 +69,12 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True  # Required for session-based auth
+
+# Session configuration for OAuth
+SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 ROOT_URLCONF = 'config.urls'
 

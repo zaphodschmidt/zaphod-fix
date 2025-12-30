@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CompletionsCreateData, CompletionsCreateResponses, CompletionsDestroyData, CompletionsDestroyResponses, CompletionsListData, CompletionsListResponses, CompletionsPartialUpdateData, CompletionsPartialUpdateResponses, CompletionsRetrieveData, CompletionsRetrieveResponses, CompletionsUpdateData, CompletionsUpdateResponses, SchemaRetrieveData, SchemaRetrieveResponses, StreaksCreateData, StreaksCreateResponses, StreaksDestroyData, StreaksDestroyResponses, StreaksListData, StreaksListResponses, StreaksPartialUpdateData, StreaksPartialUpdateResponses, StreaksRetrieveData, StreaksRetrieveResponses, StreaksUpdateData, StreaksUpdateResponses } from './types.gen';
+import type { CompletionsCreateData, CompletionsCreateResponses, CompletionsDestroyData, CompletionsDestroyResponses, CompletionsListData, CompletionsListResponses, CompletionsPartialUpdateData, CompletionsPartialUpdateResponses, CompletionsRetrieveData, CompletionsRetrieveResponses, CompletionsUpdateData, CompletionsUpdateResponses, SchemaRetrieveData, SchemaRetrieveResponses, StreaksCreateData, StreaksCreateResponses, StreaksDestroyData, StreaksDestroyResponses, StreaksListData, StreaksListResponses, StreaksPartialUpdateData, StreaksPartialUpdateResponses, StreaksRetrieveData, StreaksRetrieveResponses, StreaksUpdateData, StreaksUpdateResponses, UsersCreateData, UsersCreateResponses, UsersDestroyData, UsersDestroyResponses, UsersGoogleCallbackRetrieveData, UsersGoogleCallbackRetrieveResponses, UsersGoogleInitiateRetrieveData, UsersGoogleInitiateRetrieveResponses, UsersListData, UsersListResponses, UsersLogoutCreateData, UsersLogoutCreateResponses, UsersMeRetrieveData, UsersMeRetrieveResponses, UsersPartialUpdateData, UsersPartialUpdateResponses, UsersRetrieveData, UsersRetrieveResponses, UsersUpdateData, UsersUpdateResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -23,7 +23,7 @@ export const completionsList = <ThrowOnError extends boolean = false>(options?: 
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/completions/',
     ...options
 });
@@ -33,7 +33,7 @@ export const completionsCreate = <ThrowOnError extends boolean = false>(options:
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/completions/',
     ...options,
     headers: {
@@ -47,7 +47,7 @@ export const completionsDestroy = <ThrowOnError extends boolean = false>(options
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/completions/{id}/',
     ...options
 });
@@ -57,7 +57,7 @@ export const completionsRetrieve = <ThrowOnError extends boolean = false>(option
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/completions/{id}/',
     ...options
 });
@@ -67,7 +67,7 @@ export const completionsPartialUpdate = <ThrowOnError extends boolean = false>(o
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/completions/{id}/',
     ...options,
     headers: {
@@ -81,7 +81,7 @@ export const completionsUpdate = <ThrowOnError extends boolean = false>(options:
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/completions/{id}/',
     ...options,
     headers: {
@@ -101,7 +101,7 @@ export const schemaRetrieve = <ThrowOnError extends boolean = false>(options?: O
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/schema/',
     ...options
 });
@@ -111,7 +111,7 @@ export const streaksList = <ThrowOnError extends boolean = false>(options?: Opti
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/streaks/',
     ...options
 });
@@ -121,7 +121,7 @@ export const streaksCreate = <ThrowOnError extends boolean = false>(options: Opt
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/streaks/',
     ...options,
     headers: {
@@ -135,7 +135,7 @@ export const streaksDestroy = <ThrowOnError extends boolean = false>(options: Op
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/streaks/{id}/',
     ...options
 });
@@ -145,7 +145,7 @@ export const streaksRetrieve = <ThrowOnError extends boolean = false>(options: O
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/streaks/{id}/',
     ...options
 });
@@ -155,7 +155,7 @@ export const streaksPartialUpdate = <ThrowOnError extends boolean = false>(optio
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/streaks/{id}/',
     ...options,
     headers: {
@@ -169,11 +169,139 @@ export const streaksUpdate = <ThrowOnError extends boolean = false>(options: Opt
             in: 'cookie',
             name: 'sessionid',
             type: 'apiKey'
-        }, { scheme: 'basic', type: 'http' }],
+        }],
     url: '/api/streaks/{id}/',
     ...options,
     headers: {
         'Content-Type': 'application/json',
         ...options.headers
     }
+});
+
+export const usersList = <ThrowOnError extends boolean = false>(options?: Options<UsersListData, ThrowOnError>) => (options?.client ?? client).get<UsersListResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }],
+    url: '/api/users/',
+    ...options
+});
+
+export const usersCreate = <ThrowOnError extends boolean = false>(options: Options<UsersCreateData, ThrowOnError>) => (options.client ?? client).post<UsersCreateResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }],
+    url: '/api/users/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const usersDestroy = <ThrowOnError extends boolean = false>(options: Options<UsersDestroyData, ThrowOnError>) => (options.client ?? client).delete<UsersDestroyResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }],
+    url: '/api/users/{id}/',
+    ...options
+});
+
+export const usersRetrieve = <ThrowOnError extends boolean = false>(options: Options<UsersRetrieveData, ThrowOnError>) => (options.client ?? client).get<UsersRetrieveResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }],
+    url: '/api/users/{id}/',
+    ...options
+});
+
+export const usersPartialUpdate = <ThrowOnError extends boolean = false>(options: Options<UsersPartialUpdateData, ThrowOnError>) => (options.client ?? client).patch<UsersPartialUpdateResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }],
+    url: '/api/users/{id}/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const usersUpdate = <ThrowOnError extends boolean = false>(options: Options<UsersUpdateData, ThrowOnError>) => (options.client ?? client).put<UsersUpdateResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }],
+    url: '/api/users/{id}/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Handle Google OAuth callback.
+ */
+export const usersGoogleCallbackRetrieve = <ThrowOnError extends boolean = false>(options?: Options<UsersGoogleCallbackRetrieveData, ThrowOnError>) => (options?.client ?? client).get<UsersGoogleCallbackRetrieveResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }],
+    url: '/api/users/google/callback/',
+    ...options
+});
+
+/**
+ * Initiate Google OAuth flow.
+ */
+export const usersGoogleInitiateRetrieve = <ThrowOnError extends boolean = false>(options?: Options<UsersGoogleInitiateRetrieveData, ThrowOnError>) => (options?.client ?? client).get<UsersGoogleInitiateRetrieveResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }],
+    url: '/api/users/google/initiate/',
+    ...options
+});
+
+/**
+ * Logout current user.
+ */
+export const usersLogoutCreate = <ThrowOnError extends boolean = false>(options: Options<UsersLogoutCreateData, ThrowOnError>) => (options.client ?? client).post<UsersLogoutCreateResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }],
+    url: '/api/users/logout/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get current authenticated user.
+ */
+export const usersMeRetrieve = <ThrowOnError extends boolean = false>(options?: Options<UsersMeRetrieveData, ThrowOnError>) => (options?.client ?? client).get<UsersMeRetrieveResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }],
+    url: '/api/users/me/',
+    ...options
 });

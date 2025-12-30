@@ -19,7 +19,21 @@ import { InsightsPanel } from '@/components/stats/InsightsPanel'
 import { StreakPerformanceGrid } from '@/components/stats/StreakPerformanceGrid'
 import { useStreakStats } from '@/hooks/useStreakStats'
 
+import { redirect } from '@tanstack/react-router'
+
 export const Route = createFileRoute('/stats')({
+  beforeLoad: ({ location }) => {
+    // Check if user is authenticated
+    const token = sessionStorage.getItem('auth_token')
+    if (!token) {
+      throw redirect({
+        to: '/login',
+        search: {
+          redirect: location.href,
+        },
+      })
+    }
+  },
   component: StatsPage,
 })
 

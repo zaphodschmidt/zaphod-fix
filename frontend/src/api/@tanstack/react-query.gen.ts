@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { completionsCreate, completionsDestroy, completionsList, completionsPartialUpdate, completionsRetrieve, completionsUpdate, type Options, schemaRetrieve, streaksCreate, streaksDestroy, streaksList, streaksPartialUpdate, streaksRetrieve, streaksUpdate } from '../sdk.gen';
-import type { CompletionsCreateData, CompletionsCreateResponse, CompletionsDestroyData, CompletionsDestroyResponse, CompletionsListData, CompletionsListResponse, CompletionsPartialUpdateData, CompletionsPartialUpdateResponse, CompletionsRetrieveData, CompletionsRetrieveResponse, CompletionsUpdateData, CompletionsUpdateResponse, SchemaRetrieveData, SchemaRetrieveResponse, StreaksCreateData, StreaksCreateResponse, StreaksDestroyData, StreaksDestroyResponse, StreaksListData, StreaksListResponse, StreaksPartialUpdateData, StreaksPartialUpdateResponse, StreaksRetrieveData, StreaksRetrieveResponse, StreaksUpdateData, StreaksUpdateResponse } from '../types.gen';
+import { completionsCreate, completionsDestroy, completionsList, completionsPartialUpdate, completionsRetrieve, completionsUpdate, type Options, schemaRetrieve, streaksCreate, streaksDestroy, streaksList, streaksPartialUpdate, streaksRetrieve, streaksUpdate, usersCreate, usersDestroy, usersGoogleCallbackRetrieve, usersGoogleInitiateRetrieve, usersList, usersLogoutCreate, usersMeRetrieve, usersPartialUpdate, usersRetrieve, usersUpdate } from '../sdk.gen';
+import type { CompletionsCreateData, CompletionsCreateResponse, CompletionsDestroyData, CompletionsDestroyResponse, CompletionsListData, CompletionsListResponse, CompletionsPartialUpdateData, CompletionsPartialUpdateResponse, CompletionsRetrieveData, CompletionsRetrieveResponse, CompletionsUpdateData, CompletionsUpdateResponse, SchemaRetrieveData, SchemaRetrieveResponse, StreaksCreateData, StreaksCreateResponse, StreaksDestroyData, StreaksDestroyResponse, StreaksListData, StreaksListResponse, StreaksPartialUpdateData, StreaksPartialUpdateResponse, StreaksRetrieveData, StreaksRetrieveResponse, StreaksUpdateData, StreaksUpdateResponse, UsersCreateData, UsersCreateResponse, UsersDestroyData, UsersDestroyResponse, UsersGoogleCallbackRetrieveData, UsersGoogleCallbackRetrieveResponse, UsersGoogleInitiateRetrieveData, UsersGoogleInitiateRetrieveResponse, UsersListData, UsersListResponse, UsersLogoutCreateData, UsersLogoutCreateResponse, UsersMeRetrieveData, UsersMeRetrieveResponse, UsersPartialUpdateData, UsersPartialUpdateResponse, UsersRetrieveData, UsersRetrieveResponse, UsersUpdateData, UsersUpdateResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -231,3 +231,160 @@ export const streaksUpdateMutation = (options?: Partial<Options<StreaksUpdateDat
     };
     return mutationOptions;
 };
+
+export const usersListQueryKey = (options?: Options<UsersListData>) => createQueryKey('usersList', options);
+
+export const usersListOptions = (options?: Options<UsersListData>) => queryOptions<UsersListResponse, DefaultError, UsersListResponse, ReturnType<typeof usersListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await usersList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: usersListQueryKey(options)
+});
+
+export const usersCreateMutation = (options?: Partial<Options<UsersCreateData>>): UseMutationOptions<UsersCreateResponse, DefaultError, Options<UsersCreateData>> => {
+    const mutationOptions: UseMutationOptions<UsersCreateResponse, DefaultError, Options<UsersCreateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await usersCreate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const usersDestroyMutation = (options?: Partial<Options<UsersDestroyData>>): UseMutationOptions<UsersDestroyResponse, DefaultError, Options<UsersDestroyData>> => {
+    const mutationOptions: UseMutationOptions<UsersDestroyResponse, DefaultError, Options<UsersDestroyData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await usersDestroy({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const usersRetrieveQueryKey = (options: Options<UsersRetrieveData>) => createQueryKey('usersRetrieve', options);
+
+export const usersRetrieveOptions = (options: Options<UsersRetrieveData>) => queryOptions<UsersRetrieveResponse, DefaultError, UsersRetrieveResponse, ReturnType<typeof usersRetrieveQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await usersRetrieve({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: usersRetrieveQueryKey(options)
+});
+
+export const usersPartialUpdateMutation = (options?: Partial<Options<UsersPartialUpdateData>>): UseMutationOptions<UsersPartialUpdateResponse, DefaultError, Options<UsersPartialUpdateData>> => {
+    const mutationOptions: UseMutationOptions<UsersPartialUpdateResponse, DefaultError, Options<UsersPartialUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await usersPartialUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const usersUpdateMutation = (options?: Partial<Options<UsersUpdateData>>): UseMutationOptions<UsersUpdateResponse, DefaultError, Options<UsersUpdateData>> => {
+    const mutationOptions: UseMutationOptions<UsersUpdateResponse, DefaultError, Options<UsersUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await usersUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const usersGoogleCallbackRetrieveQueryKey = (options?: Options<UsersGoogleCallbackRetrieveData>) => createQueryKey('usersGoogleCallbackRetrieve', options);
+
+/**
+ * Handle Google OAuth callback.
+ */
+export const usersGoogleCallbackRetrieveOptions = (options?: Options<UsersGoogleCallbackRetrieveData>) => queryOptions<UsersGoogleCallbackRetrieveResponse, DefaultError, UsersGoogleCallbackRetrieveResponse, ReturnType<typeof usersGoogleCallbackRetrieveQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await usersGoogleCallbackRetrieve({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: usersGoogleCallbackRetrieveQueryKey(options)
+});
+
+export const usersGoogleInitiateRetrieveQueryKey = (options?: Options<UsersGoogleInitiateRetrieveData>) => createQueryKey('usersGoogleInitiateRetrieve', options);
+
+/**
+ * Initiate Google OAuth flow.
+ */
+export const usersGoogleInitiateRetrieveOptions = (options?: Options<UsersGoogleInitiateRetrieveData>) => queryOptions<UsersGoogleInitiateRetrieveResponse, DefaultError, UsersGoogleInitiateRetrieveResponse, ReturnType<typeof usersGoogleInitiateRetrieveQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await usersGoogleInitiateRetrieve({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: usersGoogleInitiateRetrieveQueryKey(options)
+});
+
+/**
+ * Logout current user.
+ */
+export const usersLogoutCreateMutation = (options?: Partial<Options<UsersLogoutCreateData>>): UseMutationOptions<UsersLogoutCreateResponse, DefaultError, Options<UsersLogoutCreateData>> => {
+    const mutationOptions: UseMutationOptions<UsersLogoutCreateResponse, DefaultError, Options<UsersLogoutCreateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await usersLogoutCreate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const usersMeRetrieveQueryKey = (options?: Options<UsersMeRetrieveData>) => createQueryKey('usersMeRetrieve', options);
+
+/**
+ * Get current authenticated user.
+ */
+export const usersMeRetrieveOptions = (options?: Options<UsersMeRetrieveData>) => queryOptions<UsersMeRetrieveResponse, DefaultError, UsersMeRetrieveResponse, ReturnType<typeof usersMeRetrieveQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await usersMeRetrieve({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: usersMeRetrieveQueryKey(options)
+});

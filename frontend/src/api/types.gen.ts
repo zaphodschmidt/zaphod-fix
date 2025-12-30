@@ -56,6 +56,36 @@ export type PatchedStreak = {
     color?: ColorEnum;
 };
 
+/**
+ * Serializer for User model with Google OAuth fields.
+ */
+export type PatchedUser = {
+    readonly id?: number;
+    /**
+     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+     */
+    username?: string;
+    /**
+     * Email address
+     */
+    email?: string;
+    first_name?: string;
+    last_name?: string;
+    google_id?: string | null;
+    google_email?: string | null;
+    google_picture?: string | null;
+    readonly google_access_token?: string;
+    readonly google_refresh_token?: string;
+    google_token_expiry?: string | null;
+    readonly date_joined?: string;
+    /**
+     * Active
+     *
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    readonly is_active?: boolean;
+};
+
 export type Streak = {
     readonly id: number;
     readonly completions: Array<Completion>;
@@ -66,6 +96,36 @@ export type Streak = {
     is_active?: boolean;
     start_date: string;
     color: ColorEnum;
+};
+
+/**
+ * Serializer for User model with Google OAuth fields.
+ */
+export type User = {
+    readonly id: number;
+    /**
+     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+     */
+    username: string;
+    /**
+     * Email address
+     */
+    email?: string;
+    first_name?: string;
+    last_name?: string;
+    google_id?: string | null;
+    google_email?: string | null;
+    google_picture?: string | null;
+    readonly google_access_token: string;
+    readonly google_refresh_token: string;
+    google_token_expiry?: string | null;
+    readonly date_joined: string;
+    /**
+     * Active
+     *
+     * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+     */
+    readonly is_active: boolean;
 };
 
 export type CompletionWritable = {
@@ -87,11 +147,51 @@ export type PatchedStreakWritable = {
     color?: ColorEnum;
 };
 
+/**
+ * Serializer for User model with Google OAuth fields.
+ */
+export type PatchedUserWritable = {
+    /**
+     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+     */
+    username?: string;
+    /**
+     * Email address
+     */
+    email?: string;
+    first_name?: string;
+    last_name?: string;
+    google_id?: string | null;
+    google_email?: string | null;
+    google_picture?: string | null;
+    google_token_expiry?: string | null;
+};
+
 export type StreakWritable = {
     name: string;
     is_active?: boolean;
     start_date: string;
     color: ColorEnum;
+};
+
+/**
+ * Serializer for User model with Google OAuth fields.
+ */
+export type UserWritable = {
+    /**
+     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+     */
+    username: string;
+    /**
+     * Email address
+     */
+    email?: string;
+    first_name?: string;
+    last_name?: string;
+    google_id?: string | null;
+    google_email?: string | null;
+    google_picture?: string | null;
+    google_token_expiry?: string | null;
 };
 
 export type CompletionsListData = {
@@ -313,3 +413,156 @@ export type StreaksUpdateResponses = {
 };
 
 export type StreaksUpdateResponse = StreaksUpdateResponses[keyof StreaksUpdateResponses];
+
+export type UsersListData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/users/';
+};
+
+export type UsersListResponses = {
+    200: Array<User>;
+};
+
+export type UsersListResponse = UsersListResponses[keyof UsersListResponses];
+
+export type UsersCreateData = {
+    body: UserWritable;
+    path?: never;
+    query?: never;
+    url: '/api/users/';
+};
+
+export type UsersCreateResponses = {
+    201: User;
+};
+
+export type UsersCreateResponse = UsersCreateResponses[keyof UsersCreateResponses];
+
+export type UsersDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this user.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/users/{id}/';
+};
+
+export type UsersDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type UsersDestroyResponse = UsersDestroyResponses[keyof UsersDestroyResponses];
+
+export type UsersRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this user.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/users/{id}/';
+};
+
+export type UsersRetrieveResponses = {
+    200: User;
+};
+
+export type UsersRetrieveResponse = UsersRetrieveResponses[keyof UsersRetrieveResponses];
+
+export type UsersPartialUpdateData = {
+    body?: PatchedUserWritable;
+    path: {
+        /**
+         * A unique integer value identifying this user.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/users/{id}/';
+};
+
+export type UsersPartialUpdateResponses = {
+    200: User;
+};
+
+export type UsersPartialUpdateResponse = UsersPartialUpdateResponses[keyof UsersPartialUpdateResponses];
+
+export type UsersUpdateData = {
+    body: UserWritable;
+    path: {
+        /**
+         * A unique integer value identifying this user.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/users/{id}/';
+};
+
+export type UsersUpdateResponses = {
+    200: User;
+};
+
+export type UsersUpdateResponse = UsersUpdateResponses[keyof UsersUpdateResponses];
+
+export type UsersGoogleCallbackRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/users/google/callback/';
+};
+
+export type UsersGoogleCallbackRetrieveResponses = {
+    200: User;
+};
+
+export type UsersGoogleCallbackRetrieveResponse = UsersGoogleCallbackRetrieveResponses[keyof UsersGoogleCallbackRetrieveResponses];
+
+export type UsersGoogleInitiateRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/users/google/initiate/';
+};
+
+export type UsersGoogleInitiateRetrieveResponses = {
+    200: User;
+};
+
+export type UsersGoogleInitiateRetrieveResponse = UsersGoogleInitiateRetrieveResponses[keyof UsersGoogleInitiateRetrieveResponses];
+
+export type UsersLogoutCreateData = {
+    body: UserWritable;
+    path?: never;
+    query?: never;
+    url: '/api/users/logout/';
+};
+
+export type UsersLogoutCreateResponses = {
+    200: User;
+};
+
+export type UsersLogoutCreateResponse = UsersLogoutCreateResponses[keyof UsersLogoutCreateResponses];
+
+export type UsersMeRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/users/me/';
+};
+
+export type UsersMeRetrieveResponses = {
+    200: User;
+};
+
+export type UsersMeRetrieveResponse = UsersMeRetrieveResponses[keyof UsersMeRetrieveResponses];

@@ -1,5 +1,20 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from datetime import date, timedelta
+
+
+class User(AbstractUser):
+    """Custom User model with Google OAuth support."""
+    google_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    google_email = models.EmailField(null=True, blank=True)
+    google_picture = models.URLField(null=True, blank=True)
+    google_access_token = models.TextField(null=True, blank=True)  # Store encrypted token
+    google_refresh_token = models.TextField(null=True, blank=True)  # Store encrypted token
+    google_token_expiry = models.DateTimeField(null=True, blank=True)
+    
+    class Meta:
+        db_table = 'auth_user'
+
 
 class Color(models.TextChoices):
     RED = 'red'

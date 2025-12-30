@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import DayBlockGrid from '@/components/DayBlockGrid'
 import { useQuery } from '@tanstack/react-query'
 import { streaksListOptions } from '@/api/@tanstack/react-query.gen'
@@ -7,6 +7,18 @@ import AddStreakDialog from '@/components/dialogs/AddStreakDialog'
 import { IconFlame, IconTrophy, IconCalendarStats } from '@tabler/icons-react'
 
 export const Route = createFileRoute('/')({
+  beforeLoad: ({ location }) => {
+    // Check if user is authenticated
+    const token = sessionStorage.getItem('auth_token')
+    if (!token) {
+      throw redirect({
+        to: '/login',
+        search: {
+          redirect: location.href,
+        },
+      })
+    }
+  },
   component: Index,
 })
 
