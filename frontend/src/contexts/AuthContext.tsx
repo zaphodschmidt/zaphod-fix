@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { usersMeRetrieveOptions, usersLogoutCreateMutation } from '@/api/@tanstack/react-query.gen'
@@ -121,7 +121,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }
 
   const logout = async () => {
-    await logoutMutation.mutateAsync({})
+    await logoutMutation.mutateAsync({ body: { username: user?.username ?? '' } })
   }
 
   const checkAuth = () => {
