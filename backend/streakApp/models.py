@@ -8,8 +8,8 @@ class User(AbstractUser):
     google_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
     google_email = models.EmailField(null=True, blank=True)
     google_picture = models.URLField(null=True, blank=True)
-    google_access_token = models.TextField(null=True, blank=True)  # Store encrypted token
-    google_refresh_token = models.TextField(null=True, blank=True)  # Store encrypted token
+    google_access_token = models.TextField(null=True, blank=True)
+    google_refresh_token = models.TextField(null=True, blank=True)
     google_token_expiry = models.DateTimeField(null=True, blank=True)
     
     class Meta:
@@ -41,6 +41,7 @@ class Color(models.TextChoices):
     STONE = 'stone'
 
 class Streak(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     start_date = models.DateField()

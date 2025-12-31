@@ -54,6 +54,7 @@ export type PatchedStreak = {
     is_active?: boolean;
     start_date?: string;
     color?: ColorEnum;
+    user?: number;
 };
 
 /**
@@ -96,6 +97,7 @@ export type Streak = {
     is_active?: boolean;
     start_date: string;
     color: ColorEnum;
+    user?: number;
 };
 
 /**
@@ -145,6 +147,7 @@ export type PatchedStreakWritable = {
     is_active?: boolean;
     start_date?: string;
     color?: ColorEnum;
+    user?: number;
 };
 
 /**
@@ -172,6 +175,7 @@ export type StreakWritable = {
     is_active?: boolean;
     start_date: string;
     color: ColorEnum;
+    user?: number;
 };
 
 /**
