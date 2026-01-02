@@ -34,8 +34,9 @@ import {
 } from "@/components/ui/select"
 import { COLOR_CLASSES, COLOR_DISPLAY_NAMES } from "@/lib/colors"
 import type { ColorEnum, StreakWritable } from "@/api/types.gen"
-import { IconPlus, IconFlame, IconPalette, IconCalendarEventFilled } from "@tabler/icons-react"
+import { IconPlus, IconFlame, IconPalette, IconCalendarEventFilled, IconNotebook } from "@tabler/icons-react"
 import { cn } from "@/lib/utils"
+import { Textarea } from "../ui/textarea"
 
 function AddStreakDialog() {
     const queryClient = useQueryClient()
@@ -44,7 +45,7 @@ function AddStreakDialog() {
     const [name, setName] = useState("")
     const [color, setColor] = useState<ColorEnum | "">("")
     const colors = Object.keys(COLOR_CLASSES).filter(c => COLOR_DISPLAY_NAMES[c]) as ColorEnum[]
-
+    const [description, setDescription] = useState("")
     const { mutate: createStreak, isPending } = useMutation({
         ...streaksCreateMutation({}),
         onSuccess: async () => {
@@ -121,7 +122,17 @@ function AddStreakDialog() {
                                         className="h-11 w-full bg-input/50 border-border/50 focus:border-primary/50 focus:ring-primary/20"
                                     >
                                         <SelectValue>
-                                            {!color && <span className="text-muted-foreground">Choose a color...</span>}
+                                            {color ? (
+                                                <div className="flex items-center gap-3">
+                                                    <div className={cn(
+                                                        "w-4 h-4 rounded-full",
+                                                        COLOR_CLASSES[color]?.bright
+                                                    )} />
+                                                    <span>{COLOR_DISPLAY_NAMES[color]}</span>
+                                                </div>
+                                            ) : (
+                                                <span className="text-muted-foreground">Choose a color...</span>
+                                            )}
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent className="bg-popover/95 backdrop-blur-xl border-border/50">
@@ -143,6 +154,23 @@ function AddStreakDialog() {
                                 </Select>
                                 <FieldDescription className="text-xs text-muted-foreground mt-1.5">
                                     This will be the color of your streak blocks
+                                </FieldDescription>
+                            </Field>
+                            <Field>
+                                <FieldLabel htmlFor="streak-description" className="text-sm font-medium flex items-center gap-2">
+                                    <IconNotebook className="w-4 h-4 text-muted-foreground" />
+                                    Description
+                                </FieldLabel>
+                                <Textarea
+                                    id="streak-description"
+                                    name="description"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    placeholder="e.g., I want to start a new habit of reading 30 minutes every day"
+                                    className="h-24 bg-input/50 border-border/50 focus:border-primary/50 focus:ring-primary/20"
+                                />
+                                <FieldDescription className="text-xs text-muted-foreground mt-1.5">
+                                    This will be the description of your streak
                                 </FieldDescription>
                             </Field>
                         </FieldSet>

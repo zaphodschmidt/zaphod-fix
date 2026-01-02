@@ -46,6 +46,7 @@ class Streak(models.Model):
     is_active = models.BooleanField(default=True)
     start_date = models.DateField()
     color = models.CharField(max_length=255, unique=True, choices=Color.choices)
+    description = models.TextField(blank=True, null=True)
     current_streak = models.IntegerField(default=0)
     longest_streak = models.IntegerField(default=0)
     days_completed = models.IntegerField(default=0)
