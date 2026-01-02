@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       navigate({ to: '/login' })
     },
     onError: () => {
-      // Even if logout f  ails on server, clear local state
+      // Even if logout fails on server, clear local state
       clearAuth()
       setUser(null)
       queryClient.clear()

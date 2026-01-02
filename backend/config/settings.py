@@ -75,6 +75,7 @@ CORS_ALLOW_CREDENTIALS = True  # Required for session-based auth
 SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
 
 ROOT_URLCONF = 'config.urls'
 
@@ -107,6 +108,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Running behind a reverse proxy (nginx / Cloudflare)
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_SECURE = True
 
 
 # Database
@@ -153,9 +155,3 @@ STATIC_ROOT = BASE_DIR / 'static'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800
-
-# This tells Django to trust the X-Forwarded-Proto header from Nginx
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Ensures Django generates URLs with the host header passed by Nginx
-USE_X_FORWARDED_HOST = True
