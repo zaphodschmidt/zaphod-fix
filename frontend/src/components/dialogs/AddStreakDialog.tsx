@@ -38,6 +38,7 @@ import { IconPlus, IconFlame, IconPalette, IconCalendarEventFilled, IconNotebook
 import { cn } from "@/lib/utils"
 import { Textarea } from "../ui/textarea"
 import { useAuth } from "@/contexts/AuthContext"
+import { toast } from "sonner"
 
 function AddStreakDialog() {
     const queryClient = useQueryClient()
@@ -57,6 +58,10 @@ function AddStreakDialog() {
             setColor("")
             setDescription("")
             setOpen(false)
+        },
+        onError: (error) => {
+            console.error(error)
+            toast("Failed to create streak: " + error.message)
         },
     })
 
