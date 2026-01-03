@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import DayBlockGrid from '@/components/DayBlockGrid'
 import { useQuery } from '@tanstack/react-query'
-import { streaksListOptions } from '@/api/@tanstack/react-query.gen'
+import { streaksMyStreaksListOptions } from '@/api/@tanstack/react-query.gen'
 import type { Streak } from '@/api'
 import AddStreakDialog from '@/components/dialogs/AddStreakDialog'
 import { IconFlame, IconTrophy, IconCalendarStats } from '@tabler/icons-react'
@@ -85,7 +85,7 @@ function EmptyState() {
 }
 
 function Index() {
-  const { data: streaks, isLoading } = useQuery(streaksListOptions({}))
+  const { data: streaks, isLoading } = useQuery(streaksMyStreaksListOptions({}))
 
   if (isLoading) {
     return <LoadingSkeleton />

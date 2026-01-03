@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CompletionsCreateData, CompletionsCreateResponses, CompletionsDestroyData, CompletionsDestroyResponses, CompletionsListData, CompletionsListResponses, CompletionsPartialUpdateData, CompletionsPartialUpdateResponses, CompletionsRetrieveData, CompletionsRetrieveResponses, CompletionsUpdateData, CompletionsUpdateResponses, SchemaRetrieveData, SchemaRetrieveResponses, StreaksCreateData, StreaksCreateResponses, StreaksDestroyData, StreaksDestroyResponses, StreaksListData, StreaksListResponses, StreaksPartialUpdateData, StreaksPartialUpdateResponses, StreaksRetrieveData, StreaksRetrieveResponses, StreaksUpdateData, StreaksUpdateResponses, UsersCreateData, UsersCreateResponses, UsersDestroyData, UsersDestroyResponses, UsersGoogleCallbackRetrieveData, UsersGoogleCallbackRetrieveResponses, UsersGoogleInitiateRetrieveData, UsersGoogleInitiateRetrieveResponses, UsersListData, UsersListResponses, UsersLogoutCreateData, UsersLogoutCreateResponses, UsersMeRetrieveData, UsersMeRetrieveResponses, UsersPartialUpdateData, UsersPartialUpdateResponses, UsersRetrieveData, UsersRetrieveResponses, UsersUpdateData, UsersUpdateResponses } from './types.gen';
+import type { CompletionsCreateData, CompletionsCreateResponses, CompletionsDestroyData, CompletionsDestroyResponses, CompletionsListData, CompletionsListResponses, CompletionsPartialUpdateData, CompletionsPartialUpdateResponses, CompletionsRetrieveData, CompletionsRetrieveResponses, CompletionsUpdateData, CompletionsUpdateResponses, SchemaRetrieveData, SchemaRetrieveResponses, StreaksCreateData, StreaksCreateResponses, StreaksDestroyData, StreaksDestroyResponses, StreaksListData, StreaksListResponses, StreaksMyStreaksListData, StreaksMyStreaksListResponses, StreaksPartialUpdateData, StreaksPartialUpdateResponses, StreaksRetrieveData, StreaksRetrieveResponses, StreaksUpdateData, StreaksUpdateResponses, UsersCreateData, UsersCreateResponses, UsersDestroyData, UsersDestroyResponses, UsersGoogleCallbackRetrieveData, UsersGoogleCallbackRetrieveResponses, UsersGoogleInitiateRetrieveData, UsersGoogleInitiateRetrieveResponses, UsersListData, UsersListResponses, UsersLogoutCreateData, UsersLogoutCreateResponses, UsersMeRetrieveData, UsersMeRetrieveResponses, UsersPartialUpdateData, UsersPartialUpdateResponses, UsersRetrieveData, UsersRetrieveResponses, UsersUpdateData, UsersUpdateResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -176,6 +176,21 @@ export const streaksUpdate = <ThrowOnError extends boolean = false>(options: Opt
         'Content-Type': 'application/json',
         ...options.headers
     }
+});
+
+/**
+ * List my streaks
+ *
+ * List all streaks for the current authenticated user.
+ */
+export const streaksMyStreaksList = <ThrowOnError extends boolean = false>(options?: Options<StreaksMyStreaksListData, ThrowOnError>) => (options?.client ?? client).get<StreaksMyStreaksListResponses, unknown, ThrowOnError>({
+    security: [{
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        }],
+    url: '/api/streaks/my_streaks/',
+    ...options
 });
 
 export const usersList = <ThrowOnError extends boolean = false>(options?: Options<UsersListData, ThrowOnError>) => (options?.client ?? client).get<UsersListResponses, unknown, ThrowOnError>({

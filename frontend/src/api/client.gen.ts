@@ -13,10 +13,4 @@ import type { ClientOptions as ClientOptions2 } from './types.gen';
  */
 export type CreateClientConfig<T extends ClientOptions = ClientOptions2> = (override?: Config<ClientOptions & T>) => Config<Required<ClientOptions> & T>;
 
-// NOTE:
-// - SDK endpoints already include `/api/...` in their `url` field.
-// - Default to same-origin so deployed builds call the current domain.
-// - Override if needed (e.g. local dev without nginx): VITE_API_BASE_URL=http://localhost:8002
-const baseUrl = import.meta.env.VITE_API_BASE_URL ?? '';
-
-export const client = createClient(createConfig<ClientOptions2>({ baseUrl }));
+export const client = createClient(createConfig<ClientOptions2>());

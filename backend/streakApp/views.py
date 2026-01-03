@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
+from drf_spectacular.utils import extend_schema
 import os
 import json
 
@@ -22,6 +23,19 @@ class StreakViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         print(request.data)
         return super().create(request, *args, **kwargs)
+
+    @extend_schema(
+        operation_id='streaks_my_streaks_list',
+        summary='List my streaks',
+        description='List all streaks for the current authenticated user.',
+        responses={200: StreakSerializer(many=True)},
+    )
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    def my_streaks(self, request):
+        """List all streaks for the current user."""
+        streaks = Streak.objects.filter(user=request.user)
+        serializer = self.get_serializer(streaks, many=True)
+        return Response(serializer.data)
 
 class CompletionViewSet(viewsets.ModelViewSet):
     queryset = Completion.objects.all()
@@ -169,21 +183,44 @@ class UserViewSet(viewsets.ModelViewSet):
         first_name = user_info.get('given_name', '')
         last_name = user_info.get('family_name', '')
         
-        # Get or create user
-        user, created = User.objects.get_or_create(
-            google_id=google_id,
-            defaults={
-                'username': google_email or f'google_{google_id}',
-                'email': google_email,
-                'google_email': google_email,
-                'google_picture': google_picture,
-                'first_name': first_name,
-                'last_name': last_name,
-                'google_access_token': credentials.token,
-                'google_refresh_token': credentials.refresh_token,
-                'google_token_expiry': credentials.expiry,
-            }
-        )
+        # Validate that we have a google_id
+        if not google_id:
+            return Response(
+                {'error': 'Google ID not provided'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Convert google_id to string to ensure consistency
+        google_id = str(google_id)
+        
+        # Try to find user by google_id first
+        try:
+            user = User.objects.get(google_id=google_id)
+            created = False
+        except User.DoesNotExist:
+            # User doesn't exist, create a new one
+            # Generate a unique username
+            base_username = google_email.split('@')[0] if google_email else f'google_{google_id}'
+            username = base_username
+            counter = 1
+            # Ensure username is unique
+            while User.objects.filter(username=username).exists():
+                username = f'{base_username}_{counter}'
+                counter += 1
+            
+            user = User.objects.create(
+                google_id=google_id,
+                username=username,
+                email=google_email,
+                google_email=google_email,
+                google_picture=google_picture,
+                first_name=first_name,
+                last_name=last_name,
+                google_access_token=credentials.token,
+                google_refresh_token=credentials.refresh_token,
+                google_token_expiry=credentials.expiry,
+            )
+            created = True
         
         # Update existing user if needed
         if not created:

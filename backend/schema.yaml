@@ -1,0 +1,968 @@
+openapi: 3.0.3
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /api/completions/:
+    get:
+      operationId: completions_list
+      tags:
+      - completions
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Completion'
+          description: ''
+    post:
+      operationId: completions_create
+      tags:
+      - completions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Completion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Completion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Completion'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Completion'
+          description: ''
+  /api/completions/{id}/:
+    get:
+      operationId: completions_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this completion.
+        required: true
+      tags:
+      - completions
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Completion'
+          description: ''
+    put:
+      operationId: completions_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this completion.
+        required: true
+      tags:
+      - completions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Completion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Completion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Completion'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Completion'
+          description: ''
+    patch:
+      operationId: completions_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this completion.
+        required: true
+      tags:
+      - completions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCompletion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCompletion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCompletion'
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Completion'
+          description: ''
+    delete:
+      operationId: completions_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this completion.
+        required: true
+      tags:
+      - completions
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/schema/:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/streaks/:
+    get:
+      operationId: streaks_list
+      tags:
+      - streaks
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Streak'
+          description: ''
+    post:
+      operationId: streaks_create
+      tags:
+      - streaks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Streak'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Streak'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Streak'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Streak'
+          description: ''
+  /api/streaks/{id}/:
+    get:
+      operationId: streaks_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this streak.
+        required: true
+      tags:
+      - streaks
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Streak'
+          description: ''
+    put:
+      operationId: streaks_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this streak.
+        required: true
+      tags:
+      - streaks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Streak'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Streak'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Streak'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Streak'
+          description: ''
+    patch:
+      operationId: streaks_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this streak.
+        required: true
+      tags:
+      - streaks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedStreak'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedStreak'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedStreak'
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Streak'
+          description: ''
+    delete:
+      operationId: streaks_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this streak.
+        required: true
+      tags:
+      - streaks
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/streaks/my_streaks/:
+    get:
+      operationId: streaks_my_streaks_list
+      description: List all streaks for the current authenticated user.
+      summary: List my streaks
+      tags:
+      - streaks
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Streak'
+          description: ''
+  /api/users/:
+    get:
+      operationId: users_list
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+    post:
+      operationId: users_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/{id}/:
+    get:
+      operationId: users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: users_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: users_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: users_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/users/google/callback/:
+    get:
+      operationId: users_google_callback_retrieve
+      description: Handle Google OAuth callback.
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/google/initiate/:
+    get:
+      operationId: users_google_initiate_retrieve
+      description: Initiate Google OAuth flow.
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/logout/:
+    post:
+      operationId: users_logout_create
+      description: Logout current user.
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/me/:
+    get:
+      operationId: users_me_retrieve
+      description: Get current authenticated user.
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+components:
+  schemas:
+    ColorEnum:
+      enum:
+      - red
+      - orange
+      - amber
+      - yellow
+      - lime
+      - green
+      - emerald
+      - teal
+      - cyan
+      - sky
+      - blue
+      - indigo
+      - violet
+      - purple
+      - fuchsia
+      - pink
+      - rose
+      - slate
+      - gray
+      - zinc
+      - neutral
+      - stone
+      type: string
+      description: |-
+        * `red` - Red
+        * `orange` - Orange
+        * `amber` - Amber
+        * `yellow` - Yellow
+        * `lime` - Lime
+        * `green` - Green
+        * `emerald` - Emerald
+        * `teal` - Teal
+        * `cyan` - Cyan
+        * `sky` - Sky
+        * `blue` - Blue
+        * `indigo` - Indigo
+        * `violet` - Violet
+        * `purple` - Purple
+        * `fuchsia` - Fuchsia
+        * `pink` - Pink
+        * `rose` - Rose
+        * `slate` - Slate
+        * `gray` - Gray
+        * `zinc` - Zinc
+        * `neutral` - Neutral
+        * `stone` - Stone
+    Completion:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        date_completed:
+          type: string
+          format: date
+        day_of_week:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        streak:
+          type: integer
+      required:
+      - date_completed
+      - id
+      - streak
+    PatchedCompletion:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        date_completed:
+          type: string
+          format: date
+        day_of_week:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        streak:
+          type: integer
+    PatchedStreak:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        completions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Completion'
+          readOnly: true
+        current_streak:
+          type: integer
+          readOnly: true
+        longest_streak:
+          type: integer
+          readOnly: true
+        days_completed:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        is_active:
+          type: boolean
+        start_date:
+          type: string
+          format: date
+        color:
+          $ref: '#/components/schemas/ColorEnum'
+        description:
+          type: string
+          nullable: true
+        user:
+          type: integer
+    PatchedUser:
+      type: object
+      description: Serializer for User model with Google OAuth fields.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        google_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        google_email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        google_picture:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        google_access_token:
+          type: string
+          readOnly: true
+        google_refresh_token:
+          type: string
+          readOnly: true
+        google_token_expiry:
+          type: string
+          format: date-time
+          nullable: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        is_active:
+          type: boolean
+          readOnly: true
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+    Streak:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        completions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Completion'
+          readOnly: true
+        current_streak:
+          type: integer
+          readOnly: true
+        longest_streak:
+          type: integer
+          readOnly: true
+        days_completed:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        is_active:
+          type: boolean
+        start_date:
+          type: string
+          format: date
+        color:
+          $ref: '#/components/schemas/ColorEnum'
+        description:
+          type: string
+          nullable: true
+        user:
+          type: integer
+      required:
+      - color
+      - completions
+      - current_streak
+      - days_completed
+      - id
+      - longest_streak
+      - name
+      - start_date
+    User:
+      type: object
+      description: Serializer for User model with Google OAuth fields.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        google_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        google_email:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        google_picture:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        google_access_token:
+          type: string
+          readOnly: true
+        google_refresh_token:
+          type: string
+          readOnly: true
+        google_token_expiry:
+          type: string
+          format: date-time
+          nullable: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        is_active:
+          type: boolean
+          readOnly: true
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+      required:
+      - date_joined
+      - google_access_token
+      - google_refresh_token
+      - id
+      - is_active
+      - username
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

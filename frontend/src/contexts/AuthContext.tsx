@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from '@tanstack/react-router'
 import { usersMeRetrieveOptions, usersLogoutCreateMutation } from '@/api/@tanstack/react-query.gen'
 import type { User } from '@/api'
 
@@ -33,7 +32,6 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null)
   const [isInitialized, setIsInitialized] = useState(false)
-  const navigate = useNavigate()
   const queryClient = useQueryClient()
 
   // Get token from sessionStorage
@@ -66,6 +64,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     retry: false,
   })
 
+  // Navigate to login page (using window.location since we're outside router context)
+  const navigateToLogin = () => {
+    window.location.href = '/login'
+  }
+
   // Logout mutation
   const logoutMutation = useMutation({
     ...usersLogoutCreateMutation({}),
@@ -73,14 +76,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       clearAuth()
       setUser(null)
       queryClient.clear()
-      navigate({ to: '/login' })
+      navigateToLogin()
     },
     onError: () => {
       // Even if logout fails on server, clear local state
       clearAuth()
       setUser(null)
       queryClient.clear()
-      navigate({ to: '/login' })
+      navigateToLogin()
     },
   })
 

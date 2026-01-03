@@ -39,7 +39,7 @@ function DayBlockGrid({ sizeX, sizeY, streak }: DayBlockGridProps) {
         >
           <div
             className={cn(
-              "h-3 w-3 rounded-sm transition-all duration-200 pointer-events-none",
+              "h-3 w-3 rounded transition-all duration-200 pointer-events-none",
               "group-hover/block:scale-110 group-hover/block:ring-2 group-hover/block:ring-white/20",
               isCompleted ? colorSet.bright : EMPTY_BLOCK_CLASS,
             )}
@@ -144,10 +144,10 @@ function DayBlockGrid({ sizeX, sizeY, streak }: DayBlockGridProps) {
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <span>Less</span>
           <div className="flex gap-0.5">
-            <div className={cn("w-3 h-3 rounded-sm", EMPTY_BLOCK_CLASS)} />
-            <div className={cn("w-3 h-3 rounded-sm", colorSet.light)} />
-            <div className={cn("w-3 h-3 rounded-sm", colorSet.medium)} />
-            <div className={cn("w-3 h-3 rounded-sm", colorSet.bright)} />
+            <div className={cn("w-3 h-3 rounded", EMPTY_BLOCK_CLASS)} />
+            <div className={cn("w-3 h-3 rounded", colorSet.light)} />
+            <div className={cn("w-3 h-3 rounded", colorSet.medium)} />
+            <div className={cn("w-3 h-3 rounded", colorSet.bright)} />
           </div>
           <span>More</span>
         </div>

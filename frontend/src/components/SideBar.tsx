@@ -1,4 +1,4 @@
-import { IconFlame, IconHome2, IconChartBar, IconMoon, IconSun } from "@tabler/icons-react"
+import { IconFlame, IconHome2, IconChartBar, IconMoon, IconSun, IconLogout } from "@tabler/icons-react"
 import {
   Sidebar,
   SidebarContent,
@@ -13,6 +13,8 @@ import {
 import { Link, useLocation } from "@tanstack/react-router"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/hooks/use-theme"
+import { useAuth } from "@/contexts/AuthContext"
+import { Button } from "./ui/button"
 
 const navItems = [
   {
@@ -31,6 +33,7 @@ export function SideBar() {
   const location = useLocation()
   const { resolvedTheme, toggleTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
+  const {isAuthenticated, logout} = useAuth()
 
   return (
     <Sidebar className="border-r border-sidebar-border/50">
@@ -96,6 +99,7 @@ export function SideBar() {
 
       <SidebarFooter className="p-4 pt-2">
         {/* Theme toggle */}
+
         <button
           onClick={toggleTheme}
           className="w-full flex items-center justify-between p-3 rounded-lg bg-sidebar-accent/30 border border-sidebar-border/50 hover:bg-sidebar-accent/50 transition-colors cursor-pointer"
@@ -126,6 +130,12 @@ export function SideBar() {
             />
           </div>
         </button>
+        {isAuthenticated && (
+          <Button variant="outline" className="w-full" onClick={() => logout()}>
+            <IconLogout className="w-4 h-4" />
+            Logout
+          </Button>
+        )}
       </SidebarFooter>
     </Sidebar>
   )

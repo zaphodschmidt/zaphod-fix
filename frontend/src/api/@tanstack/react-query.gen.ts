@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { completionsCreate, completionsDestroy, completionsList, completionsPartialUpdate, completionsRetrieve, completionsUpdate, type Options, schemaRetrieve, streaksCreate, streaksDestroy, streaksList, streaksPartialUpdate, streaksRetrieve, streaksUpdate, usersCreate, usersDestroy, usersGoogleCallbackRetrieve, usersGoogleInitiateRetrieve, usersList, usersLogoutCreate, usersMeRetrieve, usersPartialUpdate, usersRetrieve, usersUpdate } from '../sdk.gen';
-import type { CompletionsCreateData, CompletionsCreateResponse, CompletionsDestroyData, CompletionsDestroyResponse, CompletionsListData, CompletionsListResponse, CompletionsPartialUpdateData, CompletionsPartialUpdateResponse, CompletionsRetrieveData, CompletionsRetrieveResponse, CompletionsUpdateData, CompletionsUpdateResponse, SchemaRetrieveData, SchemaRetrieveResponse, StreaksCreateData, StreaksCreateResponse, StreaksDestroyData, StreaksDestroyResponse, StreaksListData, StreaksListResponse, StreaksPartialUpdateData, StreaksPartialUpdateResponse, StreaksRetrieveData, StreaksRetrieveResponse, StreaksUpdateData, StreaksUpdateResponse, UsersCreateData, UsersCreateResponse, UsersDestroyData, UsersDestroyResponse, UsersGoogleCallbackRetrieveData, UsersGoogleCallbackRetrieveResponse, UsersGoogleInitiateRetrieveData, UsersGoogleInitiateRetrieveResponse, UsersListData, UsersListResponse, UsersLogoutCreateData, UsersLogoutCreateResponse, UsersMeRetrieveData, UsersMeRetrieveResponse, UsersPartialUpdateData, UsersPartialUpdateResponse, UsersRetrieveData, UsersRetrieveResponse, UsersUpdateData, UsersUpdateResponse } from '../types.gen';
+import { completionsCreate, completionsDestroy, completionsList, completionsPartialUpdate, completionsRetrieve, completionsUpdate, type Options, schemaRetrieve, streaksCreate, streaksDestroy, streaksList, streaksMyStreaksList, streaksPartialUpdate, streaksRetrieve, streaksUpdate, usersCreate, usersDestroy, usersGoogleCallbackRetrieve, usersGoogleInitiateRetrieve, usersList, usersLogoutCreate, usersMeRetrieve, usersPartialUpdate, usersRetrieve, usersUpdate } from '../sdk.gen';
+import type { CompletionsCreateData, CompletionsCreateResponse, CompletionsDestroyData, CompletionsDestroyResponse, CompletionsListData, CompletionsListResponse, CompletionsPartialUpdateData, CompletionsPartialUpdateResponse, CompletionsRetrieveData, CompletionsRetrieveResponse, CompletionsUpdateData, CompletionsUpdateResponse, SchemaRetrieveData, SchemaRetrieveResponse, StreaksCreateData, StreaksCreateResponse, StreaksDestroyData, StreaksDestroyResponse, StreaksListData, StreaksListResponse, StreaksMyStreaksListData, StreaksMyStreaksListResponse, StreaksPartialUpdateData, StreaksPartialUpdateResponse, StreaksRetrieveData, StreaksRetrieveResponse, StreaksUpdateData, StreaksUpdateResponse, UsersCreateData, UsersCreateResponse, UsersDestroyData, UsersDestroyResponse, UsersGoogleCallbackRetrieveData, UsersGoogleCallbackRetrieveResponse, UsersGoogleInitiateRetrieveData, UsersGoogleInitiateRetrieveResponse, UsersListData, UsersListResponse, UsersLogoutCreateData, UsersLogoutCreateResponse, UsersMeRetrieveData, UsersMeRetrieveResponse, UsersPartialUpdateData, UsersPartialUpdateResponse, UsersRetrieveData, UsersRetrieveResponse, UsersUpdateData, UsersUpdateResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -231,6 +231,26 @@ export const streaksUpdateMutation = (options?: Partial<Options<StreaksUpdateDat
     };
     return mutationOptions;
 };
+
+export const streaksMyStreaksListQueryKey = (options?: Options<StreaksMyStreaksListData>) => createQueryKey('streaksMyStreaksList', options);
+
+/**
+ * List my streaks
+ *
+ * List all streaks for the current authenticated user.
+ */
+export const streaksMyStreaksListOptions = (options?: Options<StreaksMyStreaksListData>) => queryOptions<StreaksMyStreaksListResponse, DefaultError, StreaksMyStreaksListResponse, ReturnType<typeof streaksMyStreaksListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await streaksMyStreaksList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: streaksMyStreaksListQueryKey(options)
+});
 
 export const usersListQueryKey = (options?: Options<UsersListData>) => createQueryKey('usersList', options);
 

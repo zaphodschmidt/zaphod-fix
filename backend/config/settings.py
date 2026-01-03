@@ -94,7 +94,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'config.wsgi.application'
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
@@ -109,6 +108,7 @@ CSRF_TRUSTED_ORIGINS = [
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = False
 
 
 # Database

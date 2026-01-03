@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/field"
 import {
     streaksCreateMutation,
-    streaksListQueryKey,
+    streaksMyStreaksListQueryKey,
 } from "@/api/@tanstack/react-query.gen"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
@@ -37,6 +37,7 @@ import type { ColorEnum, StreakWritable } from "@/api/types.gen"
 import { IconPlus, IconFlame, IconPalette, IconCalendarEventFilled, IconNotebook } from "@tabler/icons-react"
 import { cn } from "@/lib/utils"
 import { Textarea } from "../ui/textarea"
+import { useAuth } from "@/contexts/AuthContext"
 
 function AddStreakDialog() {
     const queryClient = useQueryClient()
@@ -46,12 +47,15 @@ function AddStreakDialog() {
     const [color, setColor] = useState<ColorEnum | "">("")
     const colors = Object.keys(COLOR_CLASSES).filter(c => COLOR_DISPLAY_NAMES[c]) as ColorEnum[]
     const [description, setDescription] = useState("")
+    const { user } = useAuth()
     const { mutate: createStreak, isPending } = useMutation({
         ...streaksCreateMutation({}),
         onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: streaksListQueryKey({}) })
+            await queryClient.invalidateQueries({ 
+                queryKey: streaksMyStreaksListQueryKey({}) })
             setName("")
             setColor("")
+            setDescription("")
             setOpen(false)
         },
     })
@@ -59,9 +63,9 @@ function AddStreakDialog() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (!name.trim() || !color) return
+        if (!name.trim() || !color || !user?.id) return
         const startDate = new Date().toISOString().slice(0, 10)
-        const body: StreakWritable = { name: name.trim(), color, start_date: startDate }
+        const body: StreakWritable = { name: name.trim(), color, start_date: startDate, description: description.trim(), user: user?.id }
         createStreak({ body })
     }
 
