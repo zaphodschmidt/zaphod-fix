@@ -16,7 +16,7 @@ const queryClient = new QueryClient()
 // Create a new router instance
 const router = createRouter({ routeTree })
 
-// Register the router instance for type safety
+// Register the router instance for ty\pe safety
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router
