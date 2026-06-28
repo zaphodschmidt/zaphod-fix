@@ -1,4 +1,4 @@
-import { IconFlame, IconHome2, IconChartBar, IconMoon, IconSun, IconLogout } from "@tabler/icons-react"
+import { IconFlame, IconHome2, IconChartBar, IconMoon, IconSun, IconLogout, IconCalendarTime, IconListCheck, IconClock, IconBulb, IconHelpCircle } from "@tabler/icons-react"
 import {
   Sidebar,
   SidebarContent,
@@ -26,6 +26,31 @@ const navItems = [
     title: "Statistics",
     url: "/stats",
     icon: IconChartBar,
+  },
+  {
+    title: "Today",
+    url: "/today",
+    icon: IconCalendarTime,
+  },
+  {
+    title: "Tasks",
+    url: "/tasks",
+    icon: IconListCheck,
+  },
+  {
+    title: "Time Log",
+    url: "/logs",
+    icon: IconClock,
+  },
+  {
+    title: "Ideas",
+    url: "/ideas",
+    icon: IconBulb,
+  },
+  {
+    title: "Questions",
+    url: "/questions",
+    icon: IconHelpCircle,
   },
 ]
 

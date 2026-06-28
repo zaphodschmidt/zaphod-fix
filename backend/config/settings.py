@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'streakApp',
+    'tracker',
     'rest_framework',
     'drf_spectacular',
+    'django_filters',
 ]
 
 # Custom User Model

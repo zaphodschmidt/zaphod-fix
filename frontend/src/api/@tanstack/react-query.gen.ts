@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { completionsCreate, completionsDestroy, completionsList, completionsPartialUpdate, completionsRetrieve, completionsUpdate, type Options, schemaRetrieve, streaksCreate, streaksDestroy, streaksList, streaksMyStreaksList, streaksPartialUpdate, streaksRetrieve, streaksUpdate, usersCreate, usersDestroy, usersGoogleCallbackRetrieve, usersGoogleInitiateRetrieve, usersList, usersLogoutCreate, usersMeRetrieve, usersPartialUpdate, usersRetrieve, usersUpdate } from '../sdk.gen';
-import type { CompletionsCreateData, CompletionsCreateResponse, CompletionsDestroyData, CompletionsDestroyResponse, CompletionsListData, CompletionsListResponse, CompletionsPartialUpdateData, CompletionsPartialUpdateResponse, CompletionsRetrieveData, CompletionsRetrieveResponse, CompletionsUpdateData, CompletionsUpdateResponse, SchemaRetrieveData, SchemaRetrieveResponse, StreaksCreateData, StreaksCreateResponse, StreaksDestroyData, StreaksDestroyResponse, StreaksListData, StreaksListResponse, StreaksMyStreaksListData, StreaksMyStreaksListResponse, StreaksPartialUpdateData, StreaksPartialUpdateResponse, StreaksRetrieveData, StreaksRetrieveResponse, StreaksUpdateData, StreaksUpdateResponse, UsersCreateData, UsersCreateResponse, UsersDestroyData, UsersDestroyResponse, UsersGoogleCallbackRetrieveData, UsersGoogleCallbackRetrieveResponse, UsersGoogleInitiateRetrieveData, UsersGoogleInitiateRetrieveResponse, UsersListData, UsersListResponse, UsersLogoutCreateData, UsersLogoutCreateResponse, UsersMeRetrieveData, UsersMeRetrieveResponse, UsersPartialUpdateData, UsersPartialUpdateResponse, UsersRetrieveData, UsersRetrieveResponse, UsersUpdateData, UsersUpdateResponse } from '../types.gen';
+import { checkinRetrieve, completionsCreate, completionsDestroy, completionsList, completionsPartialUpdate, completionsRetrieve, completionsUpdate, dailyAnswersCreate, dailyAnswersDestroy, dailyAnswersList, dailyAnswersPartialUpdate, dailyAnswersRetrieve, dailyAnswersUpdate, ideasCreate, ideasDestroy, ideasList, ideasPartialUpdate, ideasRetrieve, ideasUpdate, logsCreate, logsDestroy, logsList, logsPartialUpdate, logsRetrieve, logsUpdate, type Options, questionsCreate, questionsDestroy, questionsList, questionsPartialUpdate, questionsRetrieve, questionsUpdate, schemaRetrieve, streaksCreate, streaksDestroy, streaksList, streaksMyStreaksList, streaksPartialUpdate, streaksRetrieve, streaksUpdate, tasksCreate, tasksDestroy, tasksList, tasksPartialUpdate, tasksRetrieve, tasksUpdate, usersCreate, usersDestroy, usersGoogleCallbackRetrieve, usersGoogleInitiateRetrieve, usersList, usersLogoutCreate, usersMeRetrieve, usersPartialUpdate, usersRetrieve, usersUpdate } from '../sdk.gen';
+import type { CheckinRetrieveData, CheckinRetrieveResponse, CompletionsCreateData, CompletionsCreateResponse, CompletionsDestroyData, CompletionsDestroyResponse, CompletionsListData, CompletionsListResponse, CompletionsPartialUpdateData, CompletionsPartialUpdateResponse, CompletionsRetrieveData, CompletionsRetrieveResponse, CompletionsUpdateData, CompletionsUpdateResponse, DailyAnswersCreateData, DailyAnswersCreateResponse, DailyAnswersDestroyData, DailyAnswersDestroyResponse, DailyAnswersListData, DailyAnswersListResponse, DailyAnswersPartialUpdateData, DailyAnswersPartialUpdateResponse, DailyAnswersRetrieveData, DailyAnswersRetrieveResponse, DailyAnswersUpdateData, DailyAnswersUpdateResponse, IdeasCreateData, IdeasCreateResponse, IdeasDestroyData, IdeasDestroyResponse, IdeasListData, IdeasListResponse, IdeasPartialUpdateData, IdeasPartialUpdateResponse, IdeasRetrieveData, IdeasRetrieveResponse, IdeasUpdateData, IdeasUpdateResponse, LogsCreateData, LogsCreateResponse, LogsDestroyData, LogsDestroyResponse, LogsListData, LogsListResponse, LogsPartialUpdateData, LogsPartialUpdateResponse, LogsRetrieveData, LogsRetrieveResponse, LogsUpdateData, LogsUpdateResponse, QuestionsCreateData, QuestionsCreateResponse, QuestionsDestroyData, QuestionsDestroyResponse, QuestionsListData, QuestionsListResponse, QuestionsPartialUpdateData, QuestionsPartialUpdateResponse, QuestionsRetrieveData, QuestionsRetrieveResponse, QuestionsUpdateData, QuestionsUpdateResponse, SchemaRetrieveData, SchemaRetrieveResponse, StreaksCreateData, StreaksCreateResponse, StreaksDestroyData, StreaksDestroyResponse, StreaksListData, StreaksListResponse, StreaksMyStreaksListData, StreaksMyStreaksListResponse, StreaksPartialUpdateData, StreaksPartialUpdateResponse, StreaksRetrieveData, StreaksRetrieveResponse, StreaksUpdateData, StreaksUpdateResponse, TasksCreateData, TasksCreateResponse, TasksDestroyData, TasksDestroyResponse, TasksListData, TasksListResponse, TasksPartialUpdateData, TasksPartialUpdateResponse, TasksRetrieveData, TasksRetrieveResponse, TasksUpdateData, TasksUpdateResponse, UsersCreateData, UsersCreateResponse, UsersDestroyData, UsersDestroyResponse, UsersGoogleCallbackRetrieveData, UsersGoogleCallbackRetrieveResponse, UsersGoogleInitiateRetrieveData, UsersGoogleInitiateRetrieveResponse, UsersListData, UsersListResponse, UsersLogoutCreateData, UsersLogoutCreateResponse, UsersMeRetrieveData, UsersMeRetrieveResponse, UsersPartialUpdateData, UsersPartialUpdateResponse, UsersRetrieveData, UsersRetrieveResponse, UsersUpdateData, UsersUpdateResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -38,6 +38,27 @@ const createQueryKey = <TOptions extends Options>(id: string, options?: TOptions
     }
     return [params];
 };
+
+export const checkinRetrieveQueryKey = (options?: Options<CheckinRetrieveData>) => createQueryKey('checkinRetrieve', options);
+
+/**
+ * Active questions paired with their answer for a given date.
+ *
+ * GET /api/checkin/?date=YYYY-MM-DD (defaults to today in server local time).
+ * Convenience endpoint for the daily check-in screen and the future MCP server.
+ */
+export const checkinRetrieveOptions = (options?: Options<CheckinRetrieveData>) => queryOptions<CheckinRetrieveResponse, DefaultError, CheckinRetrieveResponse, ReturnType<typeof checkinRetrieveQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await checkinRetrieve({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: checkinRetrieveQueryKey(options)
+});
 
 export const completionsListQueryKey = (options?: Options<CompletionsListData>) => createQueryKey('completionsList', options);
 
@@ -115,6 +136,350 @@ export const completionsUpdateMutation = (options?: Partial<Options<CompletionsU
     const mutationOptions: UseMutationOptions<CompletionsUpdateResponse, DefaultError, Options<CompletionsUpdateData>> = {
         mutationFn: async (fnOptions) => {
             const { data } = await completionsUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const dailyAnswersListQueryKey = (options?: Options<DailyAnswersListData>) => createQueryKey('dailyAnswersList', options);
+
+export const dailyAnswersListOptions = (options?: Options<DailyAnswersListData>) => queryOptions<DailyAnswersListResponse, DefaultError, DailyAnswersListResponse, ReturnType<typeof dailyAnswersListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await dailyAnswersList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: dailyAnswersListQueryKey(options)
+});
+
+export const dailyAnswersCreateMutation = (options?: Partial<Options<DailyAnswersCreateData>>): UseMutationOptions<DailyAnswersCreateResponse, DefaultError, Options<DailyAnswersCreateData>> => {
+    const mutationOptions: UseMutationOptions<DailyAnswersCreateResponse, DefaultError, Options<DailyAnswersCreateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await dailyAnswersCreate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const dailyAnswersDestroyMutation = (options?: Partial<Options<DailyAnswersDestroyData>>): UseMutationOptions<DailyAnswersDestroyResponse, DefaultError, Options<DailyAnswersDestroyData>> => {
+    const mutationOptions: UseMutationOptions<DailyAnswersDestroyResponse, DefaultError, Options<DailyAnswersDestroyData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await dailyAnswersDestroy({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const dailyAnswersRetrieveQueryKey = (options: Options<DailyAnswersRetrieveData>) => createQueryKey('dailyAnswersRetrieve', options);
+
+export const dailyAnswersRetrieveOptions = (options: Options<DailyAnswersRetrieveData>) => queryOptions<DailyAnswersRetrieveResponse, DefaultError, DailyAnswersRetrieveResponse, ReturnType<typeof dailyAnswersRetrieveQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await dailyAnswersRetrieve({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: dailyAnswersRetrieveQueryKey(options)
+});
+
+export const dailyAnswersPartialUpdateMutation = (options?: Partial<Options<DailyAnswersPartialUpdateData>>): UseMutationOptions<DailyAnswersPartialUpdateResponse, DefaultError, Options<DailyAnswersPartialUpdateData>> => {
+    const mutationOptions: UseMutationOptions<DailyAnswersPartialUpdateResponse, DefaultError, Options<DailyAnswersPartialUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await dailyAnswersPartialUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const dailyAnswersUpdateMutation = (options?: Partial<Options<DailyAnswersUpdateData>>): UseMutationOptions<DailyAnswersUpdateResponse, DefaultError, Options<DailyAnswersUpdateData>> => {
+    const mutationOptions: UseMutationOptions<DailyAnswersUpdateResponse, DefaultError, Options<DailyAnswersUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await dailyAnswersUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const ideasListQueryKey = (options?: Options<IdeasListData>) => createQueryKey('ideasList', options);
+
+export const ideasListOptions = (options?: Options<IdeasListData>) => queryOptions<IdeasListResponse, DefaultError, IdeasListResponse, ReturnType<typeof ideasListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await ideasList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: ideasListQueryKey(options)
+});
+
+export const ideasCreateMutation = (options?: Partial<Options<IdeasCreateData>>): UseMutationOptions<IdeasCreateResponse, DefaultError, Options<IdeasCreateData>> => {
+    const mutationOptions: UseMutationOptions<IdeasCreateResponse, DefaultError, Options<IdeasCreateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await ideasCreate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const ideasDestroyMutation = (options?: Partial<Options<IdeasDestroyData>>): UseMutationOptions<IdeasDestroyResponse, DefaultError, Options<IdeasDestroyData>> => {
+    const mutationOptions: UseMutationOptions<IdeasDestroyResponse, DefaultError, Options<IdeasDestroyData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await ideasDestroy({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const ideasRetrieveQueryKey = (options: Options<IdeasRetrieveData>) => createQueryKey('ideasRetrieve', options);
+
+export const ideasRetrieveOptions = (options: Options<IdeasRetrieveData>) => queryOptions<IdeasRetrieveResponse, DefaultError, IdeasRetrieveResponse, ReturnType<typeof ideasRetrieveQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await ideasRetrieve({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: ideasRetrieveQueryKey(options)
+});
+
+export const ideasPartialUpdateMutation = (options?: Partial<Options<IdeasPartialUpdateData>>): UseMutationOptions<IdeasPartialUpdateResponse, DefaultError, Options<IdeasPartialUpdateData>> => {
+    const mutationOptions: UseMutationOptions<IdeasPartialUpdateResponse, DefaultError, Options<IdeasPartialUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await ideasPartialUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const ideasUpdateMutation = (options?: Partial<Options<IdeasUpdateData>>): UseMutationOptions<IdeasUpdateResponse, DefaultError, Options<IdeasUpdateData>> => {
+    const mutationOptions: UseMutationOptions<IdeasUpdateResponse, DefaultError, Options<IdeasUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await ideasUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const logsListQueryKey = (options?: Options<LogsListData>) => createQueryKey('logsList', options);
+
+export const logsListOptions = (options?: Options<LogsListData>) => queryOptions<LogsListResponse, DefaultError, LogsListResponse, ReturnType<typeof logsListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await logsList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: logsListQueryKey(options)
+});
+
+export const logsCreateMutation = (options?: Partial<Options<LogsCreateData>>): UseMutationOptions<LogsCreateResponse, DefaultError, Options<LogsCreateData>> => {
+    const mutationOptions: UseMutationOptions<LogsCreateResponse, DefaultError, Options<LogsCreateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await logsCreate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const logsDestroyMutation = (options?: Partial<Options<LogsDestroyData>>): UseMutationOptions<LogsDestroyResponse, DefaultError, Options<LogsDestroyData>> => {
+    const mutationOptions: UseMutationOptions<LogsDestroyResponse, DefaultError, Options<LogsDestroyData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await logsDestroy({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const logsRetrieveQueryKey = (options: Options<LogsRetrieveData>) => createQueryKey('logsRetrieve', options);
+
+export const logsRetrieveOptions = (options: Options<LogsRetrieveData>) => queryOptions<LogsRetrieveResponse, DefaultError, LogsRetrieveResponse, ReturnType<typeof logsRetrieveQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await logsRetrieve({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: logsRetrieveQueryKey(options)
+});
+
+export const logsPartialUpdateMutation = (options?: Partial<Options<LogsPartialUpdateData>>): UseMutationOptions<LogsPartialUpdateResponse, DefaultError, Options<LogsPartialUpdateData>> => {
+    const mutationOptions: UseMutationOptions<LogsPartialUpdateResponse, DefaultError, Options<LogsPartialUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await logsPartialUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const logsUpdateMutation = (options?: Partial<Options<LogsUpdateData>>): UseMutationOptions<LogsUpdateResponse, DefaultError, Options<LogsUpdateData>> => {
+    const mutationOptions: UseMutationOptions<LogsUpdateResponse, DefaultError, Options<LogsUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await logsUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const questionsListQueryKey = (options?: Options<QuestionsListData>) => createQueryKey('questionsList', options);
+
+export const questionsListOptions = (options?: Options<QuestionsListData>) => queryOptions<QuestionsListResponse, DefaultError, QuestionsListResponse, ReturnType<typeof questionsListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await questionsList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: questionsListQueryKey(options)
+});
+
+export const questionsCreateMutation = (options?: Partial<Options<QuestionsCreateData>>): UseMutationOptions<QuestionsCreateResponse, DefaultError, Options<QuestionsCreateData>> => {
+    const mutationOptions: UseMutationOptions<QuestionsCreateResponse, DefaultError, Options<QuestionsCreateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await questionsCreate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const questionsDestroyMutation = (options?: Partial<Options<QuestionsDestroyData>>): UseMutationOptions<QuestionsDestroyResponse, DefaultError, Options<QuestionsDestroyData>> => {
+    const mutationOptions: UseMutationOptions<QuestionsDestroyResponse, DefaultError, Options<QuestionsDestroyData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await questionsDestroy({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const questionsRetrieveQueryKey = (options: Options<QuestionsRetrieveData>) => createQueryKey('questionsRetrieve', options);
+
+export const questionsRetrieveOptions = (options: Options<QuestionsRetrieveData>) => queryOptions<QuestionsRetrieveResponse, DefaultError, QuestionsRetrieveResponse, ReturnType<typeof questionsRetrieveQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await questionsRetrieve({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: questionsRetrieveQueryKey(options)
+});
+
+export const questionsPartialUpdateMutation = (options?: Partial<Options<QuestionsPartialUpdateData>>): UseMutationOptions<QuestionsPartialUpdateResponse, DefaultError, Options<QuestionsPartialUpdateData>> => {
+    const mutationOptions: UseMutationOptions<QuestionsPartialUpdateResponse, DefaultError, Options<QuestionsPartialUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await questionsPartialUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const questionsUpdateMutation = (options?: Partial<Options<QuestionsUpdateData>>): UseMutationOptions<QuestionsUpdateResponse, DefaultError, Options<QuestionsUpdateData>> => {
+    const mutationOptions: UseMutationOptions<QuestionsUpdateResponse, DefaultError, Options<QuestionsUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await questionsUpdate({
                 ...options,
                 ...fnOptions,
                 throwOnError: true
@@ -251,6 +616,92 @@ export const streaksMyStreaksListOptions = (options?: Options<StreaksMyStreaksLi
     },
     queryKey: streaksMyStreaksListQueryKey(options)
 });
+
+export const tasksListQueryKey = (options?: Options<TasksListData>) => createQueryKey('tasksList', options);
+
+export const tasksListOptions = (options?: Options<TasksListData>) => queryOptions<TasksListResponse, DefaultError, TasksListResponse, ReturnType<typeof tasksListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await tasksList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: tasksListQueryKey(options)
+});
+
+export const tasksCreateMutation = (options?: Partial<Options<TasksCreateData>>): UseMutationOptions<TasksCreateResponse, DefaultError, Options<TasksCreateData>> => {
+    const mutationOptions: UseMutationOptions<TasksCreateResponse, DefaultError, Options<TasksCreateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await tasksCreate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const tasksDestroyMutation = (options?: Partial<Options<TasksDestroyData>>): UseMutationOptions<TasksDestroyResponse, DefaultError, Options<TasksDestroyData>> => {
+    const mutationOptions: UseMutationOptions<TasksDestroyResponse, DefaultError, Options<TasksDestroyData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await tasksDestroy({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const tasksRetrieveQueryKey = (options: Options<TasksRetrieveData>) => createQueryKey('tasksRetrieve', options);
+
+export const tasksRetrieveOptions = (options: Options<TasksRetrieveData>) => queryOptions<TasksRetrieveResponse, DefaultError, TasksRetrieveResponse, ReturnType<typeof tasksRetrieveQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await tasksRetrieve({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: tasksRetrieveQueryKey(options)
+});
+
+export const tasksPartialUpdateMutation = (options?: Partial<Options<TasksPartialUpdateData>>): UseMutationOptions<TasksPartialUpdateResponse, DefaultError, Options<TasksPartialUpdateData>> => {
+    const mutationOptions: UseMutationOptions<TasksPartialUpdateResponse, DefaultError, Options<TasksPartialUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await tasksPartialUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const tasksUpdateMutation = (options?: Partial<Options<TasksUpdateData>>): UseMutationOptions<TasksUpdateResponse, DefaultError, Options<TasksUpdateData>> => {
+    const mutationOptions: UseMutationOptions<TasksUpdateResponse, DefaultError, Options<TasksUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await tasksUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
 
 export const usersListQueryKey = (options?: Options<UsersListData>) => createQueryKey('usersList', options);
 

@@ -5,6 +5,17 @@ export type ClientOptions = {
 };
 
 /**
+ * One active question paired with its answer for a given date (if any).
+ */
+export type CheckinItem = {
+    question_id: number;
+    text: string;
+    order: number;
+    answer_id: number | null;
+    answer: string;
+};
+
+/**
  * * `red` - Red
  * * `orange` - Orange
  * * `amber` - Amber
@@ -37,11 +48,93 @@ export type Completion = {
     streak: number;
 };
 
+export type DailyAnswer = {
+    readonly id: number;
+    question: number;
+    readonly question_text: string;
+    date: string;
+    /**
+     * Markdown supported.
+     */
+    answer?: string;
+    readonly created_at: string;
+    readonly updated_at: string;
+};
+
+export type Idea = {
+    readonly id: number;
+    /**
+     * The idea.
+     */
+    content: string;
+    /**
+     * Where you heard it / what you were doing when the idea came.
+     */
+    source: string;
+    created_at?: string;
+    readonly updated_at: string;
+};
+
+export type Log = {
+    readonly id: number;
+    /**
+     * Markdown supported.
+     */
+    body: string;
+    created_at?: string;
+    readonly updated_at: string;
+};
+
 export type PatchedCompletion = {
     readonly id?: number;
     date_completed?: string;
     day_of_week?: number;
     streak?: number;
+};
+
+export type PatchedDailyAnswer = {
+    readonly id?: number;
+    question?: number;
+    readonly question_text?: string;
+    date?: string;
+    /**
+     * Markdown supported.
+     */
+    answer?: string;
+    readonly created_at?: string;
+    readonly updated_at?: string;
+};
+
+export type PatchedIdea = {
+    readonly id?: number;
+    /**
+     * The idea.
+     */
+    content?: string;
+    /**
+     * Where you heard it / what you were doing when the idea came.
+     */
+    source?: string;
+    created_at?: string;
+    readonly updated_at?: string;
+};
+
+export type PatchedLog = {
+    readonly id?: number;
+    /**
+     * Markdown supported.
+     */
+    body?: string;
+    created_at?: string;
+    readonly updated_at?: string;
+};
+
+export type PatchedQuestion = {
+    readonly id?: number;
+    text?: string;
+    is_active?: boolean;
+    order?: number;
+    readonly created_at?: string;
 };
 
 export type PatchedStreak = {
@@ -56,6 +149,37 @@ export type PatchedStreak = {
     color?: ColorEnum;
     description?: string | null;
     user?: number;
+};
+
+export type PatchedTask = {
+    readonly id?: number;
+    title?: string;
+    /**
+     * Markdown supported.
+     */
+    description?: string;
+    /**
+     * Time you expect to spend on this.
+     */
+    expected_minutes?: number | null;
+    /**
+     * Time you actually spent.
+     */
+    actual_minutes?: number | null;
+    status?: StatusEnum;
+    /**
+     * Eisenhower matrix quadrant.
+     *
+     * * `urgent_important` - Urgent & Important
+     * * `urgent_not_important` - Urgent, Not Important
+     * * `not_urgent_important` - Not Urgent, Important
+     * * `not_urgent_not_important` - Not Urgent, Not Important
+     */
+    priority?: PriorityEnum;
+    started_at?: string | null;
+    completed_at?: string | null;
+    created_at?: string;
+    readonly updated_at?: string;
 };
 
 /**
@@ -88,6 +212,29 @@ export type PatchedUser = {
     readonly is_active?: boolean;
 };
 
+/**
+ * * `urgent_important` - Urgent & Important
+ * * `urgent_not_important` - Urgent, Not Important
+ * * `not_urgent_important` - Not Urgent, Important
+ * * `not_urgent_not_important` - Not Urgent, Not Important
+ */
+export type PriorityEnum = 'urgent_important' | 'urgent_not_important' | 'not_urgent_important' | 'not_urgent_not_important';
+
+export type Question = {
+    readonly id: number;
+    text: string;
+    is_active?: boolean;
+    order?: number;
+    readonly created_at: string;
+};
+
+/**
+ * * `todo` - To do
+ * * `in_progress` - In progress
+ * * `done` - Done
+ */
+export type StatusEnum = 'todo' | 'in_progress' | 'done';
+
 export type Streak = {
     readonly id: number;
     readonly completions: Array<Completion>;
@@ -100,6 +247,37 @@ export type Streak = {
     color: ColorEnum;
     description?: string | null;
     user?: number;
+};
+
+export type Task = {
+    readonly id: number;
+    title: string;
+    /**
+     * Markdown supported.
+     */
+    description?: string;
+    /**
+     * Time you expect to spend on this.
+     */
+    expected_minutes?: number | null;
+    /**
+     * Time you actually spent.
+     */
+    actual_minutes?: number | null;
+    status?: StatusEnum;
+    /**
+     * Eisenhower matrix quadrant.
+     *
+     * * `urgent_important` - Urgent & Important
+     * * `urgent_not_important` - Urgent, Not Important
+     * * `not_urgent_important` - Not Urgent, Important
+     * * `not_urgent_not_important` - Not Urgent, Not Important
+     */
+    priority?: PriorityEnum;
+    started_at?: string | null;
+    completed_at?: string | null;
+    created_at?: string;
+    readonly updated_at: string;
 };
 
 /**
@@ -138,10 +316,74 @@ export type CompletionWritable = {
     streak: number;
 };
 
+export type DailyAnswerWritable = {
+    question: number;
+    date: string;
+    /**
+     * Markdown supported.
+     */
+    answer?: string;
+};
+
+export type IdeaWritable = {
+    /**
+     * The idea.
+     */
+    content: string;
+    /**
+     * Where you heard it / what you were doing when the idea came.
+     */
+    source: string;
+    created_at?: string;
+};
+
+export type LogWritable = {
+    /**
+     * Markdown supported.
+     */
+    body: string;
+    created_at?: string;
+};
+
 export type PatchedCompletionWritable = {
     date_completed?: string;
     day_of_week?: number;
     streak?: number;
+};
+
+export type PatchedDailyAnswerWritable = {
+    question?: number;
+    date?: string;
+    /**
+     * Markdown supported.
+     */
+    answer?: string;
+};
+
+export type PatchedIdeaWritable = {
+    /**
+     * The idea.
+     */
+    content?: string;
+    /**
+     * Where you heard it / what you were doing when the idea came.
+     */
+    source?: string;
+    created_at?: string;
+};
+
+export type PatchedLogWritable = {
+    /**
+     * Markdown supported.
+     */
+    body?: string;
+    created_at?: string;
+};
+
+export type PatchedQuestionWritable = {
+    text?: string;
+    is_active?: boolean;
+    order?: number;
 };
 
 export type PatchedStreakWritable = {
@@ -151,6 +393,35 @@ export type PatchedStreakWritable = {
     color?: ColorEnum;
     description?: string | null;
     user?: number;
+};
+
+export type PatchedTaskWritable = {
+    title?: string;
+    /**
+     * Markdown supported.
+     */
+    description?: string;
+    /**
+     * Time you expect to spend on this.
+     */
+    expected_minutes?: number | null;
+    /**
+     * Time you actually spent.
+     */
+    actual_minutes?: number | null;
+    status?: StatusEnum;
+    /**
+     * Eisenhower matrix quadrant.
+     *
+     * * `urgent_important` - Urgent & Important
+     * * `urgent_not_important` - Urgent, Not Important
+     * * `not_urgent_important` - Not Urgent, Important
+     * * `not_urgent_not_important` - Not Urgent, Not Important
+     */
+    priority?: PriorityEnum;
+    started_at?: string | null;
+    completed_at?: string | null;
+    created_at?: string;
 };
 
 /**
@@ -173,6 +444,12 @@ export type PatchedUserWritable = {
     google_token_expiry?: string | null;
 };
 
+export type QuestionWritable = {
+    text: string;
+    is_active?: boolean;
+    order?: number;
+};
+
 export type StreakWritable = {
     name: string;
     is_active?: boolean;
@@ -180,6 +457,35 @@ export type StreakWritable = {
     color: ColorEnum;
     description?: string | null;
     user?: number;
+};
+
+export type TaskWritable = {
+    title: string;
+    /**
+     * Markdown supported.
+     */
+    description?: string;
+    /**
+     * Time you expect to spend on this.
+     */
+    expected_minutes?: number | null;
+    /**
+     * Time you actually spent.
+     */
+    actual_minutes?: number | null;
+    status?: StatusEnum;
+    /**
+     * Eisenhower matrix quadrant.
+     *
+     * * `urgent_important` - Urgent & Important
+     * * `urgent_not_important` - Urgent, Not Important
+     * * `not_urgent_important` - Not Urgent, Important
+     * * `not_urgent_not_important` - Not Urgent, Not Important
+     */
+    priority?: PriorityEnum;
+    started_at?: string | null;
+    completed_at?: string | null;
+    created_at?: string;
 };
 
 /**
@@ -201,6 +507,24 @@ export type UserWritable = {
     google_picture?: string | null;
     google_token_expiry?: string | null;
 };
+
+export type CheckinRetrieveData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Date to fetch the check-in for (YYYY-MM-DD). Defaults to today.
+         */
+        date?: string;
+    };
+    url: '/api/checkin/';
+};
+
+export type CheckinRetrieveResponses = {
+    200: Array<CheckinItem>;
+};
+
+export type CheckinRetrieveResponse = CheckinRetrieveResponses[keyof CheckinRetrieveResponses];
 
 export type CompletionsListData = {
     body?: never;
@@ -302,6 +626,433 @@ export type CompletionsUpdateResponses = {
 };
 
 export type CompletionsUpdateResponse = CompletionsUpdateResponses[keyof CompletionsUpdateResponses];
+
+export type DailyAnswersListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        date?: string;
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string;
+        question?: number;
+    };
+    url: '/api/daily-answers/';
+};
+
+export type DailyAnswersListResponses = {
+    200: Array<DailyAnswer>;
+};
+
+export type DailyAnswersListResponse = DailyAnswersListResponses[keyof DailyAnswersListResponses];
+
+export type DailyAnswersCreateData = {
+    body: DailyAnswerWritable;
+    path?: never;
+    query?: never;
+    url: '/api/daily-answers/';
+};
+
+export type DailyAnswersCreateResponses = {
+    201: DailyAnswer;
+};
+
+export type DailyAnswersCreateResponse = DailyAnswersCreateResponses[keyof DailyAnswersCreateResponses];
+
+export type DailyAnswersDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this daily answer.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/daily-answers/{id}/';
+};
+
+export type DailyAnswersDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type DailyAnswersDestroyResponse = DailyAnswersDestroyResponses[keyof DailyAnswersDestroyResponses];
+
+export type DailyAnswersRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this daily answer.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/daily-answers/{id}/';
+};
+
+export type DailyAnswersRetrieveResponses = {
+    200: DailyAnswer;
+};
+
+export type DailyAnswersRetrieveResponse = DailyAnswersRetrieveResponses[keyof DailyAnswersRetrieveResponses];
+
+export type DailyAnswersPartialUpdateData = {
+    body?: PatchedDailyAnswerWritable;
+    path: {
+        /**
+         * A unique integer value identifying this daily answer.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/daily-answers/{id}/';
+};
+
+export type DailyAnswersPartialUpdateResponses = {
+    200: DailyAnswer;
+};
+
+export type DailyAnswersPartialUpdateResponse = DailyAnswersPartialUpdateResponses[keyof DailyAnswersPartialUpdateResponses];
+
+export type DailyAnswersUpdateData = {
+    body: DailyAnswerWritable;
+    path: {
+        /**
+         * A unique integer value identifying this daily answer.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/daily-answers/{id}/';
+};
+
+export type DailyAnswersUpdateResponses = {
+    200: DailyAnswer;
+};
+
+export type DailyAnswersUpdateResponse = DailyAnswersUpdateResponses[keyof DailyAnswersUpdateResponses];
+
+export type IdeasListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string;
+    };
+    url: '/api/ideas/';
+};
+
+export type IdeasListResponses = {
+    200: Array<Idea>;
+};
+
+export type IdeasListResponse = IdeasListResponses[keyof IdeasListResponses];
+
+export type IdeasCreateData = {
+    body: IdeaWritable;
+    path?: never;
+    query?: never;
+    url: '/api/ideas/';
+};
+
+export type IdeasCreateResponses = {
+    201: Idea;
+};
+
+export type IdeasCreateResponse = IdeasCreateResponses[keyof IdeasCreateResponses];
+
+export type IdeasDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this idea.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/ideas/{id}/';
+};
+
+export type IdeasDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type IdeasDestroyResponse = IdeasDestroyResponses[keyof IdeasDestroyResponses];
+
+export type IdeasRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this idea.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/ideas/{id}/';
+};
+
+export type IdeasRetrieveResponses = {
+    200: Idea;
+};
+
+export type IdeasRetrieveResponse = IdeasRetrieveResponses[keyof IdeasRetrieveResponses];
+
+export type IdeasPartialUpdateData = {
+    body?: PatchedIdeaWritable;
+    path: {
+        /**
+         * A unique integer value identifying this idea.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/ideas/{id}/';
+};
+
+export type IdeasPartialUpdateResponses = {
+    200: Idea;
+};
+
+export type IdeasPartialUpdateResponse = IdeasPartialUpdateResponses[keyof IdeasPartialUpdateResponses];
+
+export type IdeasUpdateData = {
+    body: IdeaWritable;
+    path: {
+        /**
+         * A unique integer value identifying this idea.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/ideas/{id}/';
+};
+
+export type IdeasUpdateResponses = {
+    200: Idea;
+};
+
+export type IdeasUpdateResponse = IdeasUpdateResponses[keyof IdeasUpdateResponses];
+
+export type LogsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string;
+    };
+    url: '/api/logs/';
+};
+
+export type LogsListResponses = {
+    200: Array<Log>;
+};
+
+export type LogsListResponse = LogsListResponses[keyof LogsListResponses];
+
+export type LogsCreateData = {
+    body: LogWritable;
+    path?: never;
+    query?: never;
+    url: '/api/logs/';
+};
+
+export type LogsCreateResponses = {
+    201: Log;
+};
+
+export type LogsCreateResponse = LogsCreateResponses[keyof LogsCreateResponses];
+
+export type LogsDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this log.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/logs/{id}/';
+};
+
+export type LogsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type LogsDestroyResponse = LogsDestroyResponses[keyof LogsDestroyResponses];
+
+export type LogsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this log.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/logs/{id}/';
+};
+
+export type LogsRetrieveResponses = {
+    200: Log;
+};
+
+export type LogsRetrieveResponse = LogsRetrieveResponses[keyof LogsRetrieveResponses];
+
+export type LogsPartialUpdateData = {
+    body?: PatchedLogWritable;
+    path: {
+        /**
+         * A unique integer value identifying this log.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/logs/{id}/';
+};
+
+export type LogsPartialUpdateResponses = {
+    200: Log;
+};
+
+export type LogsPartialUpdateResponse = LogsPartialUpdateResponses[keyof LogsPartialUpdateResponses];
+
+export type LogsUpdateData = {
+    body: LogWritable;
+    path: {
+        /**
+         * A unique integer value identifying this log.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/logs/{id}/';
+};
+
+export type LogsUpdateResponses = {
+    200: Log;
+};
+
+export type LogsUpdateResponse = LogsUpdateResponses[keyof LogsUpdateResponses];
+
+export type QuestionsListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        is_active?: boolean;
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string;
+    };
+    url: '/api/questions/';
+};
+
+export type QuestionsListResponses = {
+    200: Array<Question>;
+};
+
+export type QuestionsListResponse = QuestionsListResponses[keyof QuestionsListResponses];
+
+export type QuestionsCreateData = {
+    body: QuestionWritable;
+    path?: never;
+    query?: never;
+    url: '/api/questions/';
+};
+
+export type QuestionsCreateResponses = {
+    201: Question;
+};
+
+export type QuestionsCreateResponse = QuestionsCreateResponses[keyof QuestionsCreateResponses];
+
+export type QuestionsDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this question.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/questions/{id}/';
+};
+
+export type QuestionsDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type QuestionsDestroyResponse = QuestionsDestroyResponses[keyof QuestionsDestroyResponses];
+
+export type QuestionsRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this question.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/questions/{id}/';
+};
+
+export type QuestionsRetrieveResponses = {
+    200: Question;
+};
+
+export type QuestionsRetrieveResponse = QuestionsRetrieveResponses[keyof QuestionsRetrieveResponses];
+
+export type QuestionsPartialUpdateData = {
+    body?: PatchedQuestionWritable;
+    path: {
+        /**
+         * A unique integer value identifying this question.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/questions/{id}/';
+};
+
+export type QuestionsPartialUpdateResponses = {
+    200: Question;
+};
+
+export type QuestionsPartialUpdateResponse = QuestionsPartialUpdateResponses[keyof QuestionsPartialUpdateResponses];
+
+export type QuestionsUpdateData = {
+    body: QuestionWritable;
+    path: {
+        /**
+         * A unique integer value identifying this question.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/questions/{id}/';
+};
+
+export type QuestionsUpdateResponses = {
+    200: Question;
+};
+
+export type QuestionsUpdateResponse = QuestionsUpdateResponses[keyof QuestionsUpdateResponses];
 
 export type SchemaRetrieveData = {
     body?: never;
@@ -434,6 +1185,118 @@ export type StreaksMyStreaksListResponses = {
 };
 
 export type StreaksMyStreaksListResponse = StreaksMyStreaksListResponses[keyof StreaksMyStreaksListResponses];
+
+export type TasksListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string;
+        /**
+         * * `todo` - To do
+         * * `in_progress` - In progress
+         * * `done` - Done
+         */
+        status?: 'done' | 'in_progress' | 'todo';
+    };
+    url: '/api/tasks/';
+};
+
+export type TasksListResponses = {
+    200: Array<Task>;
+};
+
+export type TasksListResponse = TasksListResponses[keyof TasksListResponses];
+
+export type TasksCreateData = {
+    body: TaskWritable;
+    path?: never;
+    query?: never;
+    url: '/api/tasks/';
+};
+
+export type TasksCreateResponses = {
+    201: Task;
+};
+
+export type TasksCreateResponse = TasksCreateResponses[keyof TasksCreateResponses];
+
+export type TasksDestroyData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this task.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/tasks/{id}/';
+};
+
+export type TasksDestroyResponses = {
+    /**
+     * No response body
+     */
+    204: void;
+};
+
+export type TasksDestroyResponse = TasksDestroyResponses[keyof TasksDestroyResponses];
+
+export type TasksRetrieveData = {
+    body?: never;
+    path: {
+        /**
+         * A unique integer value identifying this task.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/tasks/{id}/';
+};
+
+export type TasksRetrieveResponses = {
+    200: Task;
+};
+
+export type TasksRetrieveResponse = TasksRetrieveResponses[keyof TasksRetrieveResponses];
+
+export type TasksPartialUpdateData = {
+    body?: PatchedTaskWritable;
+    path: {
+        /**
+         * A unique integer value identifying this task.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/tasks/{id}/';
+};
+
+export type TasksPartialUpdateResponses = {
+    200: Task;
+};
+
+export type TasksPartialUpdateResponse = TasksPartialUpdateResponses[keyof TasksPartialUpdateResponses];
+
+export type TasksUpdateData = {
+    body: TaskWritable;
+    path: {
+        /**
+         * A unique integer value identifying this task.
+         */
+        id: number;
+    };
+    query?: never;
+    url: '/api/tasks/{id}/';
+};
+
+export type TasksUpdateResponses = {
+    200: Task;
+};
+
+export type TasksUpdateResponse = TasksUpdateResponses[keyof TasksUpdateResponses];
 
 export type UsersListData = {
     body?: never;

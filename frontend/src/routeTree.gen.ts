@@ -9,19 +9,49 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TodayRouteImport } from './routes/today'
+import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as StatsRouteImport } from './routes/stats'
+import { Route as QuestionsRouteImport } from './routes/questions'
+import { Route as LogsRouteImport } from './routes/logs'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as IdeasRouteImport } from './routes/ideas'
 import { Route as CallbackRouteImport } from './routes/callback'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TodayRoute = TodayRouteImport.update({
+  id: '/today',
+  path: '/today',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StatsRoute = StatsRouteImport.update({
   id: '/stats',
   path: '/stats',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuestionsRoute = QuestionsRouteImport.update({
+  id: '/questions',
+  path: '/questions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LogsRoute = LogsRouteImport.update({
+  id: '/logs',
+  path: '/logs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IdeasRoute = IdeasRouteImport.update({
+  id: '/ideas',
+  path: '/ideas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CallbackRoute = CallbackRouteImport.update({
@@ -38,39 +68,101 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/callback': typeof CallbackRoute
+  '/ideas': typeof IdeasRoute
   '/login': typeof LoginRoute
+  '/logs': typeof LogsRoute
+  '/questions': typeof QuestionsRoute
   '/stats': typeof StatsRoute
+  '/tasks': typeof TasksRoute
+  '/today': typeof TodayRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/callback': typeof CallbackRoute
+  '/ideas': typeof IdeasRoute
   '/login': typeof LoginRoute
+  '/logs': typeof LogsRoute
+  '/questions': typeof QuestionsRoute
   '/stats': typeof StatsRoute
+  '/tasks': typeof TasksRoute
+  '/today': typeof TodayRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/callback': typeof CallbackRoute
+  '/ideas': typeof IdeasRoute
   '/login': typeof LoginRoute
+  '/logs': typeof LogsRoute
+  '/questions': typeof QuestionsRoute
   '/stats': typeof StatsRoute
+  '/tasks': typeof TasksRoute
+  '/today': typeof TodayRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/callback' | '/login' | '/stats'
+  fullPaths:
+    | '/'
+    | '/callback'
+    | '/ideas'
+    | '/login'
+    | '/logs'
+    | '/questions'
+    | '/stats'
+    | '/tasks'
+    | '/today'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/callback' | '/login' | '/stats'
-  id: '__root__' | '/' | '/callback' | '/login' | '/stats'
+  to:
+    | '/'
+    | '/callback'
+    | '/ideas'
+    | '/login'
+    | '/logs'
+    | '/questions'
+    | '/stats'
+    | '/tasks'
+    | '/today'
+  id:
+    | '__root__'
+    | '/'
+    | '/callback'
+    | '/ideas'
+    | '/login'
+    | '/logs'
+    | '/questions'
+    | '/stats'
+    | '/tasks'
+    | '/today'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CallbackRoute: typeof CallbackRoute
+  IdeasRoute: typeof IdeasRoute
   LoginRoute: typeof LoginRoute
+  LogsRoute: typeof LogsRoute
+  QuestionsRoute: typeof QuestionsRoute
   StatsRoute: typeof StatsRoute
+  TasksRoute: typeof TasksRoute
+  TodayRoute: typeof TodayRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/today': {
+      id: '/today'
+      path: '/today'
+      fullPath: '/today'
+      preLoaderRoute: typeof TodayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/stats': {
       id: '/stats'
       path: '/stats'
@@ -78,11 +170,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StatsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/questions': {
+      id: '/questions'
+      path: '/questions'
+      fullPath: '/questions'
+      preLoaderRoute: typeof QuestionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/logs': {
+      id: '/logs'
+      path: '/logs'
+      fullPath: '/logs'
+      preLoaderRoute: typeof LogsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ideas': {
+      id: '/ideas'
+      path: '/ideas'
+      fullPath: '/ideas'
+      preLoaderRoute: typeof IdeasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/callback': {
@@ -105,8 +218,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CallbackRoute: CallbackRoute,
+  IdeasRoute: IdeasRoute,
   LoginRoute: LoginRoute,
+  LogsRoute: LogsRoute,
+  QuestionsRoute: QuestionsRoute,
   StatsRoute: StatsRoute,
+  TasksRoute: TasksRoute,
+  TodayRoute: TodayRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
