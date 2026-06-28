@@ -3,6 +3,34 @@ info:
   title: ''
   version: 0.0.0
 paths:
+  /api/checkin/:
+    get:
+      operationId: checkin_retrieve
+      description: |-
+        Active questions paired with their answer for a given date.
+
+        GET /api/checkin/?date=YYYY-MM-DD (defaults to today in server local time).
+        Convenience endpoint for the daily check-in screen and the future MCP server.
+      parameters:
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+        description: Date to fetch the check-in for (YYYY-MM-DD). Defaults to today.
+      tags:
+      - checkin
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CheckinItem'
+          description: ''
   /api/completions/:
     get:
       operationId: completions_list
@@ -147,6 +175,611 @@ paths:
       security:
       - cookieAuth: []
       - {}
+      responses:
+        '204':
+          description: No response body
+  /api/daily-answers/:
+    get:
+      operationId: daily_answers_list
+      parameters:
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: question
+        schema:
+          type: integer
+      tags:
+      - daily-answers
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DailyAnswer'
+          description: ''
+    post:
+      operationId: daily_answers_create
+      tags:
+      - daily-answers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DailyAnswer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DailyAnswer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DailyAnswer'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyAnswer'
+          description: ''
+  /api/daily-answers/{id}/:
+    get:
+      operationId: daily_answers_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this daily answer.
+        required: true
+      tags:
+      - daily-answers
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyAnswer'
+          description: ''
+    put:
+      operationId: daily_answers_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this daily answer.
+        required: true
+      tags:
+      - daily-answers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DailyAnswer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DailyAnswer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DailyAnswer'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyAnswer'
+          description: ''
+    patch:
+      operationId: daily_answers_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this daily answer.
+        required: true
+      tags:
+      - daily-answers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDailyAnswer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDailyAnswer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDailyAnswer'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyAnswer'
+          description: ''
+    delete:
+      operationId: daily_answers_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this daily answer.
+        required: true
+      tags:
+      - daily-answers
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/ideas/:
+    get:
+      operationId: ideas_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      tags:
+      - ideas
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Idea'
+          description: ''
+    post:
+      operationId: ideas_create
+      tags:
+      - ideas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Idea'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Idea'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Idea'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Idea'
+          description: ''
+  /api/ideas/{id}/:
+    get:
+      operationId: ideas_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this idea.
+        required: true
+      tags:
+      - ideas
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Idea'
+          description: ''
+    put:
+      operationId: ideas_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this idea.
+        required: true
+      tags:
+      - ideas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Idea'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Idea'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Idea'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Idea'
+          description: ''
+    patch:
+      operationId: ideas_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this idea.
+        required: true
+      tags:
+      - ideas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedIdea'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedIdea'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedIdea'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Idea'
+          description: ''
+    delete:
+      operationId: ideas_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this idea.
+        required: true
+      tags:
+      - ideas
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/logs/:
+    get:
+      operationId: logs_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      tags:
+      - logs
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Log'
+          description: ''
+    post:
+      operationId: logs_create
+      tags:
+      - logs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Log'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Log'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Log'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Log'
+          description: ''
+  /api/logs/{id}/:
+    get:
+      operationId: logs_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this log.
+        required: true
+      tags:
+      - logs
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Log'
+          description: ''
+    put:
+      operationId: logs_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this log.
+        required: true
+      tags:
+      - logs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Log'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Log'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Log'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Log'
+          description: ''
+    patch:
+      operationId: logs_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this log.
+        required: true
+      tags:
+      - logs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLog'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLog'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLog'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Log'
+          description: ''
+    delete:
+      operationId: logs_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this log.
+        required: true
+      tags:
+      - logs
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/questions/:
+    get:
+      operationId: questions_list
+      parameters:
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      tags:
+      - questions
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+          description: ''
+    post:
+      operationId: questions_create
+      tags:
+      - questions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Question'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Question'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+  /api/questions/{id}/:
+    get:
+      operationId: questions_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this question.
+        required: true
+      tags:
+      - questions
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+    put:
+      operationId: questions_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this question.
+        required: true
+      tags:
+      - questions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Question'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Question'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+    patch:
+      operationId: questions_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this question.
+        required: true
+      tags:
+      - questions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedQuestion'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
+    delete:
+      operationId: questions_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this question.
+        required: true
+      tags:
+      - questions
+      security:
+      - cookieAuth: []
       responses:
         '204':
           description: No response body
@@ -460,6 +1093,166 @@ paths:
                 items:
                   $ref: '#/components/schemas/Streak'
           description: ''
+  /api/tasks/:
+    get:
+      operationId: tasks_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - done
+          - in_progress
+          - todo
+        description: |-
+          * `todo` - To do
+          * `in_progress` - In progress
+          * `done` - Done
+      tags:
+      - tasks
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+          description: ''
+    post:
+      operationId: tasks_create
+      tags:
+      - tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Task'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Task'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: ''
+  /api/tasks/{id}/:
+    get:
+      operationId: tasks_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this task.
+        required: true
+      tags:
+      - tasks
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: ''
+    put:
+      operationId: tasks_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this task.
+        required: true
+      tags:
+      - tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Task'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Task'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: ''
+    patch:
+      operationId: tasks_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this task.
+        required: true
+      tags:
+      - tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTask'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTask'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTask'
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: ''
+    delete:
+      operationId: tasks_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this task.
+        required: true
+      tags:
+      - tasks
+      security:
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/users/:
     get:
       operationId: users_list
@@ -677,6 +1470,28 @@ paths:
           description: ''
 components:
   schemas:
+    CheckinItem:
+      type: object
+      description: One active question paired with its answer for a given date (if
+        any).
+      properties:
+        question_id:
+          type: integer
+        text:
+          type: string
+        order:
+          type: integer
+        answer_id:
+          type: integer
+          nullable: true
+        answer:
+          type: string
+      required:
+      - answer
+      - answer_id
+      - order
+      - question_id
+      - text
     ColorEnum:
       enum:
       - red
@@ -744,6 +1559,83 @@ components:
       - date_completed
       - id
       - streak
+    DailyAnswer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        question:
+          type: integer
+        question_text:
+          type: string
+          readOnly: true
+        date:
+          type: string
+          format: date
+        answer:
+          type: string
+          description: Markdown supported.
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - date
+      - id
+      - question
+      - question_text
+      - updated_at
+    Idea:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        content:
+          type: string
+          description: The idea.
+        source:
+          type: string
+          description: Where you heard it / what you were doing when the idea came.
+          maxLength: 500
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - content
+      - id
+      - source
+      - updated_at
+    Log:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        body:
+          type: string
+          description: Markdown supported.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - body
+      - id
+      - updated_at
     PatchedCompletion:
       type: object
       properties:
@@ -759,6 +1651,86 @@ components:
           minimum: -2147483648
         streak:
           type: integer
+    PatchedDailyAnswer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        question:
+          type: integer
+        question_text:
+          type: string
+          readOnly: true
+        date:
+          type: string
+          format: date
+        answer:
+          type: string
+          description: Markdown supported.
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedIdea:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        content:
+          type: string
+          description: The idea.
+        source:
+          type: string
+          description: Where you heard it / what you were doing when the idea came.
+          maxLength: 500
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedLog:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        body:
+          type: string
+          description: Markdown supported.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedQuestion:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+          maxLength: 500
+        is_active:
+          type: boolean
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
     PatchedStreak:
       type: object
       properties:
@@ -794,6 +1766,57 @@ components:
           nullable: true
         user:
           type: integer
+    PatchedTask:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          description: Markdown supported.
+        expected_minutes:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Time you expect to spend on this.
+        actual_minutes:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Time you actually spent.
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        priority:
+          allOf:
+          - $ref: '#/components/schemas/PriorityEnum'
+          description: |-
+            Eisenhower matrix quadrant.
+
+            * `urgent_important` - Urgent & Important
+            * `urgent_not_important` - Urgent, Not Important
+            * `not_urgent_important` - Not Urgent, Important
+            * `not_urgent_not_important` - Not Urgent, Not Important
+        started_at:
+          type: string
+          format: date-time
+          nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
     PatchedUser:
       type: object
       description: Serializer for User model with Google OAuth fields.
@@ -852,6 +1875,51 @@ components:
           title: Active
           description: Designates whether this user should be treated as active. Unselect
             this instead of deleting accounts.
+    PriorityEnum:
+      enum:
+      - urgent_important
+      - urgent_not_important
+      - not_urgent_important
+      - not_urgent_not_important
+      type: string
+      description: |-
+        * `urgent_important` - Urgent & Important
+        * `urgent_not_important` - Urgent, Not Important
+        * `not_urgent_important` - Not Urgent, Important
+        * `not_urgent_not_important` - Not Urgent, Not Important
+    Question:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        text:
+          type: string
+          maxLength: 500
+        is_active:
+          type: boolean
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - text
+    StatusEnum:
+      enum:
+      - todo
+      - in_progress
+      - done
+      type: string
+      description: |-
+        * `todo` - To do
+        * `in_progress` - In progress
+        * `done` - Done
     Streak:
       type: object
       properties:
@@ -896,6 +1964,61 @@ components:
       - longest_streak
       - name
       - start_date
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          description: Markdown supported.
+        expected_minutes:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Time you expect to spend on this.
+        actual_minutes:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Time you actually spent.
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        priority:
+          allOf:
+          - $ref: '#/components/schemas/PriorityEnum'
+          description: |-
+            Eisenhower matrix quadrant.
+
+            * `urgent_important` - Urgent & Important
+            * `urgent_not_important` - Urgent, Not Important
+            * `not_urgent_important` - Not Urgent, Important
+            * `not_urgent_not_important` - Not Urgent, Not Important
+        started_at:
+          type: string
+          format: date-time
+          nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - id
+      - title
+      - updated_at
     User:
       type: object
       description: Serializer for User model with Google OAuth fields.
